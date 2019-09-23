@@ -4,6 +4,7 @@ import './Card.css';
 
 class Card {
     constructor(set, suite, value, parent, face){
+        this.color = (suite === 'H' || suite === 'D')?'red':'black';
         this.face = face;
         this.suite = suite;
         this.value = value;

@@ -27,10 +27,10 @@ class GameBoard {
 
         STATE.OBJECT_TREE.push(new Stock(this, 'stock'));
         STATE.OBJECT_TREE.push(new Talon(this, 'talon'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'spade'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'heart'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'club'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'diamond'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'spade', 'S'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'heart', 'H'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'club', 'C'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'diamond', 'D'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau1'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau2'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau3'));

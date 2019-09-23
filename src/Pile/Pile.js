@@ -7,6 +7,7 @@ class Pile {
         this.cssClasses = ['topPile'];
         this.cards = [];
         this.addCards = this.addCards.bind(this);
+        this.cardCount = this.cardCount.bind(this);
         this.element = this.element.bind(this);
         this.getBottom = this.getBottom.bind(this);
         this.getHeight = this.getHeight.bind(this);
@@ -17,10 +18,15 @@ class Pile {
         this.refresh = this.refresh.bind(this);
         this.removeCards = this.removeCards.bind(this);
         this.selectCards = this.selectCards.bind(this);
+        this.topCard = this.topCard.bind(this);
     }
     
     addCards(cards) {
         cards.forEach(card => {this.cards.push(card)});
+    }
+
+    cardCount() {
+        return this.cards.length;
     }
 
     element() {
@@ -33,6 +39,10 @@ class Pile {
     getRight() {return this.getLeft() + this.element().offsetWidth};
     getTop() {return this.element().offsetTop};
     getWidth() {return this.element().offsetWidth};
+
+    topCard(){
+        return (!!this.cards)?this.cards[this.cards.length-1]:false;
+    }
 
     refresh() {
         this.cards.forEach(card => {

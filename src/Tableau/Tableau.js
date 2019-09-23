@@ -1,4 +1,5 @@
 import Pile from '../Pile/Pile';
+import {FromAlpha} from '../Conversion/Conversion';
 import './Tableau.css';
 
 export default class Tableau extends Pile {
@@ -8,6 +9,7 @@ export default class Tableau extends Pile {
         this.limit = name.charAt(name.length-1);
         this.refresh = this.refresh.bind(this);
         this.render = this.render.bind(this);
+        this.validateMove = this.validateMove.bind(this);
         this.render();
     }
 
@@ -30,6 +32,18 @@ export default class Tableau extends Pile {
         me.style.zIndex = 0;
         this.cssClasses.forEach(item => me.classList.add(item));
         this.parent.element().appendChild(me);
+    }
+
+    validateMove(aCard) {
+        if(this.cards.length){
+            if((aCard[0].color != this.topCard().color) && (FromAlpha(aCard[0].value) == FromAlpha(this.topCard().value) -1)){
+                return true;
+            } else {
+                return false;
+            }   
+        } else if((this.cardCount() == 0) && (FromAlpha(aCard[0].value) == 12)){
+            return true;
+        }
     }
 
 }
