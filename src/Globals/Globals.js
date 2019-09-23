@@ -81,6 +81,20 @@ const DETECT_MOBILE_USER = () => {
     STATE.GAME_MOBILE_USER = result;
 }
 
+const PILE_STOCK_CLICK = (event) => {
+    let stock = ALL_PILES().find(item => item.name == 'stock');
+    let talon = ALL_PILES().find(item => item.name == 'talon');
+
+    talon.cards.reverse();
+    talon.cards.forEach(card => {
+        card.flip();
+        stock.cards.push(card)
+    });
+    talon.cards = [];
+
+    REFRESH_SCREEN();
+}
+
 const WINDOW_MOUSE_MOVE = (event) => {
     STATE.WINDOW_MOUSE_POS = [event.clientX,event.clientY];
 
@@ -113,7 +127,8 @@ const WINDOW_MOUSE_UP = (event) => {
 export {
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,
-    WINDOW_MOUSE_UP,
+    PILE_STOCK_CLICK,
     REFRESH_SCREEN,
-    WINDOW_MOUSE_MOVE
+    WINDOW_MOUSE_MOVE,
+    WINDOW_MOUSE_UP,
 };
