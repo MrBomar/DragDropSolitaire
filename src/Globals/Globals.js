@@ -58,7 +58,7 @@ const CARD_DRAG_END = () => {
         STATE.CARD_DRAG_PILE.cards[STATE.CARD_DRAG_PILE.cards.length-1].flip();
         STATE.CARD_DROP_PILE.addCards(STATE.CARD_DRAG_PILE.removeCards(STATE.CARD_DRAG_CARDS));
     } else if(STATE.CARD_DROP_PILE) {
-        STATE.CARD_DROP_PILE.addCards(STATE.CARD_DRAG_PILE.removeCards(STATE.CARD_DRAG_CARDS));
+        if(STATE.CARD_DROP_PILE.name != 'talon')STATE.CARD_DROP_PILE.addCards(STATE.CARD_DRAG_PILE.removeCards(STATE.CARD_DRAG_CARDS));
     }
 
     //Drop all cards
