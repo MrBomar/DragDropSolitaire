@@ -6,14 +6,18 @@
     color: red;
 }
 
+.card {
+    box-sizing: border-box;
+}
+
 .cardFront h2 {
+    display: block;
     position: absolute;
     height: calc(20.4397vw * .20);
     line-height: calc(20.4397vw * .20);
-    vertical-align: middle;
     width: calc(20.4397vw * .20);
     text-align: center;
-    font-size: 4w;
+    font-size: 4vw;
 }
 
 .cardFront {
@@ -21,6 +25,10 @@
     display: grid;
     grid-template-rows: 20% 60% 20%;
     grid-template-columns: calc(20.4397vw * .20) auto calc(20.4397vw * .20);
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 1px 2px black;
+    border-radius: 1vw;
 }
 
 .cardTopLeft {
@@ -34,7 +42,6 @@
 }
 
 .cardMiddle {
-    position: absolute;
     width: 100%;
     height: calc(20.4397vw *.6);
     line-height: calc(20.4397vw *.6);
@@ -57,6 +64,7 @@
 }
 
 .cardBack {
+    position: fixed;
     background-color: teal;
     border-width: 1vh;
     border-style: ridge groove groove ridge;
@@ -64,16 +72,13 @@
     box-shadow: 1px 2px black;
 }
 
+.cardBack h1, h2 {
+    display: none;
+}
+
 .cardTop, .cardBottom {
     width: 100%;
     height: calc(20.4397vw * .25);
-}
-
-.cardFront{
-    background-color: white;
-    border: 1px solid black;
-    box-shadow: 1px 2px black;
-    border-radius: 1vw;
 }
 
 .cardBack, .cardFront, .mobileCardFront {

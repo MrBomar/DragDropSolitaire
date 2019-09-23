@@ -6,7 +6,7 @@ import {REFRESH_SCREEN, WINDOW_MOUSE_MOVE, WINDOW_MOUSE_UP, DETECT_MOBILE_USER} 
 
 DETECT_MOBILE_USER();
 STATE.OBJECT_TREE.push(new GameBoard);
-STATE.OBJECT_TREE.push(new StatusIndicator(STATE.OBJECT_TREE.find(item=>item instanceof GameBoard)));
+//STATE.OBJECT_TREE.push(new StatusIndicator(STATE.OBJECT_TREE.find(item=>item instanceof GameBoard)));
 REFRESH_SCREEN();
 
 window.addEventListener('resize', REFRESH_SCREEN);

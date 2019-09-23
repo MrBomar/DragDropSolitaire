@@ -4,7 +4,7 @@ import './Card.css';
 
 class Card {
     constructor(set, suite, value, parent, face){
-        this.face = true;
+        this.face = face;
         this.suite = suite;
         this.value = value;
         this.set = set;
@@ -58,13 +58,14 @@ class Card {
 
     flip() {
         //Change the value
-        this.face != this.face;
+        this.face = !this.face;
         if(this.face){
+            this.element().classList.remove('cardBack');
             this.element().classList.add('cardFront');
-            this.element().classList.remove('cardBack');
         } else {
+            console.log('Face is false');
             this.element().classList.add('cardBack');
-            this.element().classList.remove('cardBack');
+            this.element().classList.remove('cardFront');
         }
     }
 
@@ -83,7 +84,6 @@ class Card {
                         <h2 class="cardBottomRight">${this.valueSymbol}</h3>`;           
         me.classList.add(this.suite);
         (this.face)?me.classList.add('cardFront'):me.classList.add('cardBack');
-        me.classList.add("cardFront");
         this.cssClasses.forEach(item => me.classList.add(item));
         me.id = this.name;
         this.parent.element().appendChild(me);

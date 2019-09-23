@@ -20,7 +20,7 @@ class Pile {
     }
     
     addCards(cards) {
-        this.cards = this.cards.concat(cards);
+        cards.forEach(card => {this.cards.push(card)});
     }
 
     element() {
@@ -38,6 +38,7 @@ class Pile {
         this.cards.forEach(card => {
             card.setTop(this.element().offsetTop);
             card.setLeft(this.element().offsetLeft);
+            card.setZIndex(this.cards.indexOf(card));
         })
     }
 

@@ -45,7 +45,7 @@ class Deck {
 
         //Build deck
         shuffled.forEach(item => {
-            myParent.cards.push(new Card(item[0], item[1], item[2], board))
+            myParent.cards.push(new Card(item[0], item[1], item[2], board, false))
         })
     }
 
