@@ -4,7 +4,7 @@ class Pile {
     constructor(parent, name) {
         this.parent = parent;
         this.name = name;
-        this.cssClasses = ['pile'];
+        this.cssClasses = ['topPile'];
         this.cards = [];
         this.addCards = this.addCards.bind(this);
         this.element = this.element.bind(this);
@@ -14,11 +14,9 @@ class Pile {
         this.getRight = this.getRight.bind(this);
         this.getTop = this.getTop.bind(this);
         this.getWidth = this.getWidth.bind(this);
-        this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
         this.removeCards = this.removeCards.bind(this);
         this.selectCards = this.selectCards.bind(this);
-        this.render();
     }
     
     addCards(cards) {
@@ -35,14 +33,6 @@ class Pile {
     getRight() {return this.getLeft() + this.element().offsetWidth};
     getTop() {return this.element().offsetTop};
     getWidth() {return this.element().offsetWidth};
-
-    render() {
-        let me = document.createElement('div');
-        me.id = this.name;
-        me.style.zIndex = 0;
-        this.cssClasses.forEach(item => me.classList.add(item));
-        this.parent.element().appendChild(me);
-    }
 
     refresh() {
         this.cards.forEach(card => {

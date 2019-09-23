@@ -1,6 +1,8 @@
 import STATE from '../State/State';
 import './GameBoard.css';
-import Pile from '../Pile/Pile';
+import Stock from '../Stock/Stock';
+import Talon from '../Talon/Talon';
+import Foundation from '../Foundation/Foundation';
 import Deck from '../Deck/Deck';
 import Tableau from '../Tableau/Tableau';
 
@@ -23,12 +25,12 @@ class GameBoard {
         me.style.zIndex = -1;
         document.body.appendChild(me);
 
-        STATE.OBJECT_TREE.push(new Pile(this, 'stock'));
-        STATE.OBJECT_TREE.push(new Pile(this, 'talon'));
-        STATE.OBJECT_TREE.push(new Pile(this, 'spade'));
-        STATE.OBJECT_TREE.push(new Pile(this, 'heart'));
-        STATE.OBJECT_TREE.push(new Pile(this, 'club'));
-        STATE.OBJECT_TREE.push(new Pile(this, 'diamond'));
+        STATE.OBJECT_TREE.push(new Stock(this, 'stock'));
+        STATE.OBJECT_TREE.push(new Talon(this, 'talon'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'spade'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'heart'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'club'));
+        STATE.OBJECT_TREE.push(new Foundation(this, 'diamond'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau1'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau2'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau3'));
@@ -40,9 +42,6 @@ class GameBoard {
         let target = STATE.OBJECT_TREE.find(item=> item.name === 'stock');
         let myDeck = new Deck;
         myDeck.random(target, this);
-
-        
-
     }
 
     refresh(){}

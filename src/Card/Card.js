@@ -13,6 +13,7 @@ class Card {
         this.name = set+suite+value;
         this.parent = parent;
         this.dragStartPOS = [];
+        this.zIndex = 0;
         this.clickEvents = [
             {
                 trigger: "mousedown",
@@ -42,6 +43,9 @@ class Card {
 
         //Shade the card
         this.element().classList.add('shade');
+
+        //Adjust ZIndex
+        this.element().style.zIndex = this.zIndex + 100;
     }
 
     drop() {
@@ -88,7 +92,10 @@ class Card {
 
     setTop(y) {this.element().style.top = `${y}px`};
     setLeft(x) {this.element().style.left = `${x}px`};
-    setZIndex(z) {this.element().style.zIndex = z};
+    setZIndex(z) {
+        this.element().style.zIndex = z;
+        this.zIndex = z;
+    };
 }
 
 export default Card;
