@@ -1,0 +1,88 @@
+.S, .C {
+    color: black;
+}
+
+.D, .H {
+    color: red;
+}
+
+.cardFront h2 {
+    position: absolute;
+    height: calc(20.4397vw * .20);
+    line-height: calc(20.4397vw * .20);
+    vertical-align: middle;
+    width: calc(20.4397vw * .20);
+    text-align: center;
+    font-size: 4w;
+}
+
+.cardFront {
+    position: fixed;
+    display: grid;
+    grid-template-rows: 20% 60% 20%;
+    grid-template-columns: calc(20.4397vw * .20) auto calc(20.4397vw * .20);
+}
+
+.cardTopLeft {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.cardTopRight {
+    grid-row: 1;
+    grid-column: 3;
+}
+
+.cardMiddle {
+    position: absolute;
+    width: 100%;
+    height: calc(20.4397vw *.6);
+    line-height: calc(20.4397vw *.6);
+    vertical-align: middle;
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    text-align: center;
+    font-size: 8vw;
+}
+
+.cardBottomLeft {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.cardBottomRight {
+    grid-row: 3;
+    grid-column: 3;
+}
+
+.cardBack {
+    background-color: teal;
+    border-width: 1vh;
+    border-style: ridge groove groove ridge;
+    border-radius: 1vw;
+    box-shadow: 1px 2px black;
+}
+
+.cardTop, .cardBottom {
+    width: 100%;
+    height: calc(20.4397vw * .25);
+}
+
+.cardFront{
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 1px 2px black;
+    border-radius: 1vw;
+}
+
+.cardBack, .cardFront, .mobileCardFront {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    user-select: none;
+}
+
+.shade {
+    background-color: rgb(180,180,255);
+    opacity: 80;
+}

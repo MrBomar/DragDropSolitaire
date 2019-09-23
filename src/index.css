@@ -1,0 +1,10 @@
+* {
+    /*position: fixed;*/
+    margin: 0px;
+    padding: 0px;
+    text-size-adjust: none;
+}
+
+body {
+    background-color: red;
+}

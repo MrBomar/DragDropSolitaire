@@ -1,0 +1,16 @@
+#gameBoard {
+    width: 100vw;
+    height: 100vh;
+    background-color: green;
+    display: grid;
+
+    grid-template-columns: 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw; 
+    grid-template-rows: 1vw 20.44414437vw 1vw calc(100vh - 23.44414437vw) 1vw; 
+}
+
+@media screen and (min-aspect-ratio: 741/741) {
+    #gameBoard {
+        grid-template-columns: 1vw, 13.14vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw; 
+        grid-template-rows: 1vw, 20.4397vw, 1vw, calc(100vh - 22.4397vw); 
+    }
+}

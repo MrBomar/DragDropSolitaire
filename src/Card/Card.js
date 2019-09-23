@@ -1,0 +1,94 @@
+import {ToSymbol, ToFaceValue} from '../Conversion/Conversion';
+import {CARD_MOUSE_DOWN} from '../Globals/Globals';
+import './Card.css';
+
+class Card {
+    constructor(set, suite, value, parent, face){
+        this.face = true;
+        this.suite = suite;
+        this.value = value;
+        this.set = set;
+        this.valueSymbol = ToFaceValue(value);
+        this.suiteSymbol = ToSymbol(suite);
+        this.name = set+suite+value;
+        this.parent = parent;
+        this.dragStartPOS = [];
+        this.clickEvents = [
+            {
+                trigger: "mousedown",
+                action: CARD_MOUSE_DOWN
+            }
+        ];
+        this.cssClasses = [
+            'card'
+        ]
+        this.element = this.element.bind(this);
+        this.flip = this.flip.bind(this);
+        this.getTop = this.getTop.bind(this);
+        this.getLeft = this.getLeft.bind(this);
+        this.getHeight = this.getHeight.bind(this);
+        this.getWidth = this.getWidth.bind(this);
+        this.render = this.render.bind(this);
+        this.setTop = this.setTop.bind(this);
+        this.setLeft = this.setLeft.bind(this);
+        this.setZIndex = this.setZIndex.bind(this);
+        this.render();
+    }
+
+    drag(margin) {
+        //Adjust position
+        this.setLeft(this.dragStartPOS[0]+margin[0]);
+        this.setTop(this.dragStartPOS[1]+margin[1]);
+
+        //Shade the card
+        this.element().classList.add('shade');
+    }
+
+    drop() {
+        this.element().classList.remove('shade');
+    }
+
+    element() {
+        return document.getElementById(this.name);
+    }
+
+    flip() {
+        //Change the value
+        this.face != this.face;
+        if(this.face){
+            this.element().classList.add('cardFront');
+            this.element().classList.remove('cardBack');
+        } else {
+            this.element().classList.add('cardBack');
+            this.element().classList.remove('cardBack');
+        }
+    }
+
+    getTop() {return this.element().offsetTop};
+    getLeft() {return this.element().offsetLeft};
+    getHeight() {return this.element().offsetHeight};
+    getWidth() {return this.element().offsetWidth};
+
+    render(){
+        let me = document.createElement("div");
+        me.innerHTML = `
+                        <h2 class="cardTopLeft">${this.valueSymbol}</h3>
+                        <h2 class="cardTopRight">${this.suiteSymbol}</h2>
+                        <h1 class="cardMiddle">${this.suiteSymbol}</h1>
+                        <h2 class="cardBottomLeft">${this.suiteSymbol}</h2>
+                        <h2 class="cardBottomRight">${this.valueSymbol}</h3>`;           
+        me.classList.add(this.suite);
+        (this.face)?me.classList.add('cardFront'):me.classList.add('cardBack');
+        me.classList.add("cardFront");
+        this.cssClasses.forEach(item => me.classList.add(item));
+        me.id = this.name;
+        this.parent.element().appendChild(me);
+        this.clickEvents.forEach(item => me.addEventListener(item.trigger, item.action));
+    }
+
+    setTop(y) {this.element().style.top = `${y}px`};
+    setLeft(x) {this.element().style.left = `${x}px`};
+    setZIndex(z) {this.element().style.zIndex = z};
+}
+
+export default Card;

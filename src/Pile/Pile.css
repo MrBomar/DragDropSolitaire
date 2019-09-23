@@ -1,0 +1,107 @@
+.pile div {
+    position: absolute;
+}
+
+#stock {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background-color: yellow;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#talon {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background-color: yellow;
+    grid-column: 4;
+    grid-row: 2;
+}
+
+#spade {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background-color: yellow;
+    grid-column: 8;
+    grid-row: 2;
+}
+
+#heart {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background-color: yellow;
+    grid-column: 10;
+    grid-row: 2;
+}
+
+#club {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background-color: yellow;
+    grid-column: 12;
+    grid-row: 2;
+}
+
+#diamond {
+    height: 20.44414437vw;
+    width: 13.14285714vw;
+    background: yellow;
+    grid-column: 14;
+    grid-row: 2;
+}
+
+#tableau1 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#tableau2 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 4;
+    grid-row: 4;   
+}
+
+#tableau3 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 6;
+    grid-row: 4;   
+}
+
+#tableau4 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 8;
+    grid-row: 4;   
+}
+
+#tableau5 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 10;
+    grid-row: 4;   
+}
+
+#tableau6 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+    background-color: yellow;
+    grid-column: 12;
+    grid-row: 4;   
+}
+
+#tableau7 {
+    width: 13.14285714vw;
+    height: calc(100vh - (23.44414437vw));
+        background-color: yellow;
+    grid-column: 14;
+    grid-row: 4;   
+}
