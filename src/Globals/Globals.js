@@ -16,11 +16,12 @@ const CARD_CLICK_START = (e) => {
 const CARD_MOUSE_DOWN = (event) => {
     //Double click detection
     if(STATE.CARD_MOUSE_DBL_CLICK){
+        //Insert here the actions desired for a double click.
         console.log('Double click has occured');
     } else {
         STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
             STATE.CARD_MOUSE_DBL_CLICK = false;
-        },500)
+        },300)
     }
     
     if(STATE.GAME_DRAG_OPTION) {

@@ -91,3 +91,37 @@
     background-color: rgb(180,180,255);
     opacity: 80;
 }
+
+@media screen and (min-aspect-ratio: 741/741) {
+    .cardFront h2 {
+        height: calc(20.4397vh * .20);
+        line-height: calc(20.4397vh * .20);
+        width: calc(20.4397vh * .20);
+        font-size: 4vh;
+    }
+    
+    .cardFront {
+        grid-template-columns: calc(20.4397vh * .20) auto calc(20.4397vh * .20);
+    }
+    
+    .cardMiddle {
+        height: calc(20.4397vh *.6);
+        line-height: calc(20.4397vh *.6);
+        font-size: 8vh;
+    }
+
+    .cardBack {
+        border-width: 1vh;
+        border-radius: 1vh;
+    }
+    
+    .cardTop, .cardBottom {
+        height: calc(20.4397vh * .25);
+    }
+    
+    .cardBack, .cardFront, .mobileCardFront {
+        height: 20.44414437vh;
+        width: 13.14285714vh;
+        user-select: none;
+    }
+}

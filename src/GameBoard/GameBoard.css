@@ -10,7 +10,7 @@
 
 @media screen and (min-aspect-ratio: 741/741) {
     #gameBoard {
-        grid-template-columns: 1vw, 13.14vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw, 1vw, 13.4vw; 
-        grid-template-rows: 1vw, 20.4397vw, 1vw, calc(100vh - 22.4397vw); 
+        grid-template-columns: 1vh 13.14285714vh 1vh 13.14285714vh 1vh 13.14285714vh 1vh 13.14285714vh 1vw 13.14285714vh 1vw 13.14285714vh 1vh 13.14285714vh 1vh; 
+        grid-template-rows: 1vh 20.44414437vh 1vh calc(100vw - 23.44414437vh) 1vh;
     }
 }

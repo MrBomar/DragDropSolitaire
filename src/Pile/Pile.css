@@ -32,3 +32,10 @@
 #diamond {
     grid-column: 14;
 }
+
+@media screen and (min-aspect-ratio: 741 / 741){
+    .topPile {
+        height: 20.44414437vh;
+        width: 13.14285714vh;
+    }
+}
