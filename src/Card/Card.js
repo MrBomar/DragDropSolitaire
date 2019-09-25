@@ -64,7 +64,6 @@ class Card {
             this.element().classList.remove('cardBack');
             this.element().classList.add('cardFront');
         } else {
-            console.log('Face is false');
             this.element().classList.add('cardBack');
             this.element().classList.remove('cardFront');
         }

@@ -7,6 +7,7 @@ let STATE = {
     CARD_DRAG_PILE: false,
     CARD_DROP_PILE: false,
     WINDOW_MOUSE_POS: false,
+    CARD_MOUSE_DBL_CLICK: false,
     OBJECT_TREE: []
 }
 

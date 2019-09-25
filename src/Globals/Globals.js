@@ -14,6 +14,15 @@ const CARD_CLICK_START = (e) => {
 }
 
 const CARD_MOUSE_DOWN = (event) => {
+    //Double click detection
+    if(STATE.CARD_MOUSE_DBL_CLICK){
+        console.log('Double click has occured');
+    } else {
+        STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
+            STATE.CARD_MOUSE_DBL_CLICK = false;
+        },500)
+    }
+    
     if(STATE.GAME_DRAG_OPTION) {
         CARD_DRAG_START(event);
     } else {
@@ -77,12 +86,18 @@ const CARD_DRAG_END = () => {
     REFRESH_SCREEN();
 }
 
+const GAME_DEAL_RANDOM = () => {
+
+}
+
+const GAME_DEAL_SOLVABLE = () => {
+    
+}
+
 const DETECT_MOBILE_USER = () => {
-    let result = false;
     ["Mobile","Phone","Pixel","Android","Opera Mini"].forEach(device=>{
-        if(navigator.userAgent.includes(device))result = true;
+        STATE.GAME_MOBILE_USER = (navigator.userAgent.includes(device))? true: false;
     })
-    STATE.GAME_MOBILE_USER = result;
 }
 
 const PILE_STOCK_CLICK = (event) => {

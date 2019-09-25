@@ -19,12 +19,7 @@ export default class Foundation extends Pile {
     }
 
     validateMove(aCard) {
-        console.log(aCard.length);
-        console.log(aCard[0].value);
-        console.log(aCard[0].suite);
-        console.log(this.suite);
         if(aCard.length == 1) {
-            console.log('Shit')
             if(!!this.cardCount() && aCard[0].suite === this.suite) {
                 return(FromAlpha(this.topCard().value) === FromAlpha(aCard[0].value)-1)? true: false;
             } else if(aCard[0].value === 'A' && aCard[0].suite === this.suite) {
