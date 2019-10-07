@@ -1,0 +1,36 @@
+.foundation {
+    border: 1px inset;
+    border-radius: 1vw;
+    z-index: -1;
+}
+
+.symbol {
+    font-size: 14vw;
+    text-align: center;
+    width: 13.14vw;
+    z-index: -1;
+}
+
+.mobileSymbol {
+    padding-top: 5vw;
+    font-size: 8vw;
+    text-align: center;
+    width: 13.14vw;
+    z-index: -1;
+}
+
+@media screen and (min-aspect-ratio: 741 / 741) {
+    .symbol {
+        font-size: 14vh;
+        width: 13.14vh;
+        margin-top: 1vh;
+        padding-top: 1vh;
+    }
+    
+    .mobileSymbol {
+        padding-top: 5vh;
+        font-size: 8vh;
+        width: 13.14vh;
+        margin-top: 1vh;
+    }
+}

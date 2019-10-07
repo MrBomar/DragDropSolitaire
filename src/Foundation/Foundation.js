@@ -1,9 +1,12 @@
 import Pile from '../Pile/Pile';
+import {ToSymbol} from '../Conversion/Conversion';
 import {FromAlpha} from '../Conversion/Conversion';
+import './Foundation.css';
 
 export default class Foundation extends Pile {
     constructor(parent, name, suite){
         super(parent, name);
+        this.cssClasses = ["foundation", "topPile"];
         this.suite = suite;
         this.render = this.render.bind(this);
         this.validateMove = this.validateMove.bind(this);
@@ -11,10 +14,13 @@ export default class Foundation extends Pile {
     }
 
     render() {
-        let me = document.createElement('div');
+        let me = document.createElement('h1');
         me.id = this.name;
         me.style.zIndex = 0;
+        me.style.color = (this.suite == "S" || this.suite == "C")? "black" : "red" ;
+        me.innerText = ToSymbol(this.suite);
         this.cssClasses.forEach(item => me.classList.add(item));
+        me.classList.add("symbol");
         this.parent.element().appendChild(me);
     }
 

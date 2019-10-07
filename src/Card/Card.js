@@ -1,5 +1,6 @@
 import {ToSymbol, ToFaceValue} from '../Conversion/Conversion';
 import {CARD_MOUSE_DOWN} from '../Globals/Globals';
+import STATE from '../State/State';
 import './Card.css';
 
 class Card {
@@ -24,18 +25,22 @@ class Card {
         this.cssClasses = [
             'card'
         ]
+        this.addClass = this.addClass.bind(this);
         this.element = this.element.bind(this);
         this.flip = this.flip.bind(this);
         this.getTop = this.getTop.bind(this);
         this.getLeft = this.getLeft.bind(this);
         this.getHeight = this.getHeight.bind(this);
         this.getWidth = this.getWidth.bind(this);
+        this.removeClass = this.removeClass.bind(this);
         this.render = this.render.bind(this);
         this.setTop = this.setTop.bind(this);
         this.setLeft = this.setLeft.bind(this);
         this.setZIndex = this.setZIndex.bind(this);
         this.render();
     }
+
+    addClass(a) {this.element().classList.add(a)}
 
     drag(margin) {
         //Adjust position
@@ -61,11 +66,11 @@ class Card {
         //Change the value
         this.face = !this.face;
         if(this.face){
-            this.element().classList.remove('cardBack');
-            this.element().classList.add('cardFront');
+            this.removeClass('cardBack');
+            this.addClass('cardFront');
         } else {
-            this.element().classList.add('cardBack');
-            this.element().classList.remove('cardFront');
+            this.addClass('cardBack');
+            this.removeClass('cardFront');
         }
     }
 
@@ -73,6 +78,8 @@ class Card {
     getLeft() {return this.element().offsetLeft};
     getHeight() {return this.element().offsetHeight};
     getWidth() {return this.element().offsetWidth};
+
+    removeClass(a) {this.element().classList.remove(a)}
 
     render(){
         let me = document.createElement("div");
@@ -83,7 +90,11 @@ class Card {
                         <h2 class="cardBottomLeft">${this.suiteSymbol}</h2>
                         <h2 class="cardBottomRight">${this.valueSymbol}</h3>`;           
         me.classList.add(this.suite);
-        (this.face)?me.classList.add('cardFront'):me.classList.add('cardBack');
+        if(this.face) {
+            me.classList.add('cardFront');
+        } else {
+            me.classList.add("cardBack");
+        }
         this.cssClasses.forEach(item => me.classList.add(item));
         me.id = this.name;
         this.parent.element().appendChild(me);

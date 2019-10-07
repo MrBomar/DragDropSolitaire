@@ -3,6 +3,9 @@ import Pile from "../Pile/Pile";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
+//Isolate Card
+const FIND_CARD = (a) => (a.classList.contains('card'))? a: FIND_CARD(a.parentElement);
+
 const REFRESH_SCREEN = () => {
     //This routine will cycle through state objects and refresh their related objects.
     STATE.OBJECT_TREE.forEach(obj=>obj.refresh());
@@ -15,12 +18,14 @@ const CARD_CLICK_START = (e) => {
 
 const CARD_MOUSE_DOWN = (event) => {
     //Double click detection
-    if(STATE.CARD_MOUSE_DBL_CLICK){
+    if(STATE.CARD_MOUSE_DBL_CLICK && FIND_CARD(event.target) == STATE.CARD_MOUSE_DBL_CLICK_TARGET){
         //Insert here the actions desired for a double click.
         console.log('Double click has occured');
     } else {
+        STATE.CARD_MOUSE_DBL_CLICK_TARGET = FIND_CARD(event.target);
         STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
             STATE.CARD_MOUSE_DBL_CLICK = false;
+            STATE.CARD_MOUSE_DBL_CLICK_TARGET = false;
         },300)
     }
     
@@ -38,16 +43,13 @@ const CARD_DRAG_START = () => {
     //Update drag status
     STATE.CARD_DRAG_STATUS = true;
 
-    //Isolate Card
-    const findCard = (a) => (a.classList.contains('card'))? a: findCard(a.parentElement);
-
     //Cycle through the STATE.OBJECT_TREE and identify the pile that contains the card.
     ALL_PILES().forEach(pile => {
-        if(pile.cards.find(card => findCard(event.target).id === card.name)) STATE.CARD_DRAG_PILE = pile;
+        if(pile.cards.find(card => FIND_CARD(event.target).id === card.name)) STATE.CARD_DRAG_PILE = pile;
     })
     
     //Grab additional cards
-    STATE.CARD_DRAG_CARDS = STATE.CARD_DRAG_PILE.selectCards(findCard(event.target));
+    STATE.CARD_DRAG_CARDS = STATE.CARD_DRAG_PILE.selectCards(FIND_CARD(event.target));
 
     //Set card drag start POS 
     STATE.CARD_DRAG_CARDS.forEach(card => card.dragStartPOS = [card.getLeft(), card.getTop()]);

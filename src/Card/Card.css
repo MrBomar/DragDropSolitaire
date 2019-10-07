@@ -10,16 +10,6 @@
     box-sizing: border-box;
 }
 
-.cardFront h2 {
-    display: block;
-    position: absolute;
-    height: calc(20.4397vw * .20);
-    line-height: calc(20.4397vw * .20);
-    width: calc(20.4397vw * .20);
-    text-align: center;
-    font-size: 4vw;
-}
-
 .cardFront {
     position: fixed;
     display: grid;
@@ -29,6 +19,16 @@
     border: 1px solid black;
     box-shadow: 1px 2px black;
     border-radius: 1vw;
+}
+
+.cardFront h2 {
+    display: block;
+    position: absolute;
+    height: calc(20.4397vw * .20);
+    line-height: calc(20.4397vw * .20);
+    width: calc(20.4397vw * .20);
+    text-align: center;
+    font-size: 4vw;
 }
 
 .cardTopLeft {
