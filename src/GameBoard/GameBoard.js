@@ -5,6 +5,7 @@ import Talon from '../Talon/Talon';
 import Foundation from '../Foundation/Foundation';
 import Deck from '../Deck/Deck';
 import Tableau from '../Tableau/Tableau';
+import StatusIndicator from '../StatusIndicator/StatusIndicator';
 
 class GameBoard {
     constructor() {
@@ -42,6 +43,8 @@ class GameBoard {
         let target = STATE.OBJECT_TREE.find(item=> item.name === 'stock');
         let myDeck = new Deck;
         myDeck.random(target, this);
+
+        let crap = new StatusIndicator(document.body);
     }
 
     refresh(){}

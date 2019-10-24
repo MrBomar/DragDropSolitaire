@@ -1,4 +1,5 @@
 import STATE from '../State/State';
+import Action from "../Action/Action";
 import './StatusIndicator.css';
 
 class StatusIndicator {
@@ -14,7 +15,11 @@ class StatusIndicator {
         me.id = 'statusIndicator';
         me.style.zIndex = 10000;
         me.innerHTML = `<h3 id='statusIndicatorMessage'></h3>`;
-        this.parent.element().appendChild(me);
+        this.parent.appendChild(me);
+        let button = document.createElement("button");
+        button.innerText = "Undo";
+        button.onclick = Action.Undo;
+        me.appendChild(button);
     }
 
     refresh(){

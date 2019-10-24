@@ -1,3 +1,4 @@
+import Action from "../Action/Action";
 import STATE from "../State/State";
 import Pile from "../Pile/Pile";
 
@@ -66,19 +67,32 @@ const CARD_DRAG_END = () => {
     STATE.WINDOW_MOUSE_POS[1] <= pile.getBottom());
 
     if(STATE.CARD_DRAG_PILE.name === "stock"){
+        //Drop pile set in the state.
         STATE.CARD_DROP_PILE = ALL_PILES().find(pile => pile.name == 'talon');
-        STATE.CARD_DRAG_PILE.cards[STATE.CARD_DRAG_PILE.cards.length-1].flip();
-        STATE.CARD_DROP_PILE.addCards(STATE.CARD_DRAG_PILE.removeCards(STATE.CARD_DRAG_CARDS));
+
+        //Combined Move
+        let combination = []
+        
+        //Top stock card is flipped
+        STATE.CARD_DRAG_CARDS.forEach(card => combination.push(new Action.FlipCard(card)));
+
+        //Create the move object and add it to the state.
+        combination.push(new Action.MoveCard());
+
+        //Add combination move to state history
+        STATE.CARD_MOVE_HISTORY.push(new Action.CombinedMove(combination));
+
     } else if(STATE.CARD_DROP_PILE) {
         if(STATE.CARD_DROP_PILE.name != 'talon') {
             if(STATE.CARD_DROP_PILE.validateMove(STATE.CARD_DRAG_CARDS)){
-                STATE.CARD_DROP_PILE.addCards(STATE.CARD_DRAG_PILE.removeCards(STATE.CARD_DRAG_CARDS))
+                //Create the move object and add it to the state.
+                STATE.CARD_MOVE_HISTORY.push(new Action.MoveCard());
             }
         };
     }
 
-    //Drop all cards
-    STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
+    // //Drop all cards
+    // STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
 
     //Clear drop STATE
     STATE.CARD_DRAG_CARDS = false;

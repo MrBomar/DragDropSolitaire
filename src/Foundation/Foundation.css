@@ -21,10 +21,8 @@
 
 @media screen and (min-aspect-ratio: 741 / 741) {
     .symbol {
-        font-size: 14vh;
+        font-size: 15vh;
         width: 13.14vh;
-        margin-top: 1vh;
-        padding-top: 1vh;
     }
     
     .mobileSymbol {
