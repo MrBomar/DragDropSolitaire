@@ -1,4 +1,3 @@
-import StatusIndicator from './StatusIndicator/StatusIndicator';
 import GameBoard from './GameBoard/GameBoard';
 import './index.css';
 import STATE from './State/State';

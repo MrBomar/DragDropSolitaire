@@ -1,0 +1,19 @@
+.CloseButton {
+    width: 300px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+}
+
+.CloseButton > h1{
+    width: 50px;
+    margin-left: 250px;
+    text-align: center;
+}
+
+.CloseButton > h1:hover{
+    color: black;
+    background-color: rgba(255,255,255,.70);
+    user-select: none;
+}

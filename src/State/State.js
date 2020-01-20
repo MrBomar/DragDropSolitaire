@@ -9,8 +9,10 @@ let STATE = {
     CARD_MOUSE_DBL_CLICK: false,
     CARD_MOUSE_DBL_CLICK_TARGET: false,
     CARD_MOVE_HISTORY: [],
+    GAME_MENU: false,
     OBJECT_TREE: [],
     WINDOW_MOUSE_POS: false,
+    WINDOW_MENU_OPEN: true,
 }
 
 export default STATE;

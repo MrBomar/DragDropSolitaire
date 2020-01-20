@@ -149,6 +149,10 @@ const WINDOW_MOUSE_MOVE = (event) => {
 //Action if drag status is false
     else {
 
+        //Activate menu when mouseover left margin
+        if(!STATE.WINDOW_MENU_OPEN && STATE.WINDOW_MOUSE_POS[0] < 25) {
+            Action.ToggleMenu();
+        }
     }
 }
 

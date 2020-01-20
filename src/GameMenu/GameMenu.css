@@ -1,0 +1,58 @@
+#gameMenu {
+    width: 300px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+}
+
+#gameMenuScreen {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+}
+
+
+.menuopen {
+    animation-name: menu-open;
+    animation-duration: 0.4s;
+    display: block;
+}
+
+.menuclose {
+    display: none;
+}
+
+.screenopen {
+    animation-name: screen-open;
+    animation-duration: 0.4s;
+    display: block;
+}
+
+.screenclose {
+    display: none;
+}
+
+@keyframes menu-open {
+    from {
+        opacity: 0;
+    }
+    to {
+        width: 1;
+    }
+}
+
+@keyframes screen-open {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
