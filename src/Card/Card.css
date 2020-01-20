@@ -8,6 +8,7 @@
 
 .card {
     box-sizing: border-box;
+    user-select: none;
 }
 
 .cardFront {
@@ -68,7 +69,7 @@
     background-color: teal;
     border-width: 1vh;
     border-style: ridge groove groove ridge;
-    border-radius: 1vh;
+    border-radius: 1vw;
     box-shadow: 1px 2px black;
 }
 
@@ -102,6 +103,7 @@
     
     .cardFront {
         grid-template-columns: calc(20.4397vh * .20) auto calc(20.4397vh * .20);
+        border-radius: 1vh;
     }
     
     .cardMiddle {
