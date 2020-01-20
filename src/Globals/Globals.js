@@ -12,6 +12,25 @@ const REFRESH_SCREEN = () => {
     STATE.OBJECT_TREE.forEach(obj=>obj.refresh());
 }
 
+const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
+    //This function should move a card from one deck to another in an animated fashion.
+    console.log('No Error Thus Far');
+
+    //Identify the from pile.
+    STATE.CARD_DRAG_PILE = fromPile;
+
+    //Select cards from the pile.
+    STATE.CARD_DRAG_CARDS = fromPile.selectCards(targetCard);
+    STATE.CARD_DRAG_CARDS.forEach(crd => crd.flip());
+
+    //Identiy the to pile.
+    STATE.CARD_DROP_PILE = toPile;
+
+    //Create the move object and add it to the state.
+    let tempMove = new Action.MoveCard();
+    if(!deal) STATE.CARD_MOVE_HISTORY.push(tempMove);
+}
+
 const CARD_CLICK_START = (e) => {
     //Click action to be handled here.
     console.log("Click event game selected");
@@ -61,6 +80,8 @@ const CARD_DRAG_START = () => {
 }
 
 const CARD_DRAG_END = () => {
+
+    //Identify drop pile my cursor POS on mouseup.
     STATE.CARD_DROP_PILE = ALL_PILES().find(pile => STATE.WINDOW_MOUSE_POS[0] >= pile.getLeft() &&
     STATE.WINDOW_MOUSE_POS[0] <= pile.getRight() &&
     STATE.WINDOW_MOUSE_POS[1] >= pile.getTop() &&
@@ -82,9 +103,15 @@ const CARD_DRAG_END = () => {
         //Add combination move to state history
         STATE.CARD_MOVE_HISTORY.push(new Action.CombinedMove(combination));
 
+    //Methods to carry out if the mouse is over a pile on mouseup
     } else if(STATE.CARD_DROP_PILE) {
+
+        //Action to carry out if the drop pile is anything other than Talon
         if(STATE.CARD_DROP_PILE.name != 'talon') {
+            
+            //Action to carry out if the move is valid.
             if(STATE.CARD_DROP_PILE.validateMove(STATE.CARD_DRAG_CARDS)){
+                
                 //Create the move object and add it to the state.
                 STATE.CARD_MOVE_HISTORY.push(new Action.MoveCard());
             }
@@ -165,6 +192,7 @@ const WINDOW_MOUSE_UP = (event) => {
 }
 
 export {
+    CARD_AUTO_MOVE,
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,
     PILE_STOCK_CLICK,
