@@ -1,4 +1,4 @@
-//import STATE from '../State/State';
+import {GAME_DEAL_RANDOM} from '../Globals/Globals';
 import Action from "../Action/Action";
 import './GameMenu.css';
 //import GameBoard from '../GameBoard/GameBoard';
@@ -32,6 +32,7 @@ class GameMenu {
         this.menuItems.push(new CloseButton(Action.ToggleMenu));
         this.menuItems.push(new MenuButton('Close', Action.ToggleMenu));
         this.menuItems.push(new MenuButton('Undo', Action.Undo));
+        this.menuItems.push(new MenuButton('Deal Random', GAME_DEAL_RANDOM));
         this.menuItems.forEach(item=>{
             this.object.appendChild(item.build());
         })

@@ -1,6 +1,7 @@
 import Action from "../Action/Action";
 import STATE from "../State/State";
 import Pile from "../Pile/Pile";
+import Deck from "../Deck/Deck";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
@@ -13,15 +14,15 @@ const REFRESH_SCREEN = () => {
 }
 
 const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
-    //This function should move a card from one deck to another in an animated fashion.
-    console.log('No Error Thus Far');
+    //This function will move a card from one deck to another in an animated fashion.
+    //Eventually this will need to be animated.
+    //NEEDS FIXED
 
     //Identify the from pile.
     STATE.CARD_DRAG_PILE = fromPile;
 
     //Select cards from the pile.
     STATE.CARD_DRAG_CARDS = fromPile.selectCards(targetCard);
-    STATE.CARD_DRAG_CARDS.forEach(crd => crd.flip());
 
     //Identiy the to pile.
     STATE.CARD_DROP_PILE = toPile;
@@ -130,8 +131,47 @@ const CARD_DRAG_END = () => {
     REFRESH_SCREEN();
 }
 
-const GAME_DEAL_RANDOM = () => {
+const GAME_DEAL = () => {
+    //This function moves the card from stock to the tableau piles.
+    let fromPile = STATE.OBJECT_TREE.find(pile => pile.name == 'stock');
 
+    //Deal order
+    let dealOrder = [
+        ['tableau1',true],['tableau2',false],['tableau3',false],['tableau4',false],['tableau5',false],['tableau6',false],['tableau7',false],
+        ['tableau2',true],['tableau3',false],['tableau4',false],['tableau5',false],['tableau6',false],['tableau7',false],
+        ['tableau3',true],['tableau4',false],['tableau5',false],['tableau6',false],['tableau7',false],
+        ['tableau4',true],['tableau5',false],['tableau6',false],['tableau7',false],
+        ['tableau5',true],['tableau6',false],['tableau7',false],
+        ['tableau6',true],['tableau7',false],
+        ['tableau7',true]
+    ];
+
+    //Iterate through the deal order and perform the card moves.
+    dealOrder.forEach(item => {
+        let cardArray = fromPile.topCard();
+        let toPile = STATE.OBJECT_TREE.find(pile => pile.name == item[0]);
+        if(item[1]) cardArray.flip();
+        CARD_AUTO_MOVE(fromPile, cardArray, toPile, false);
+    });
+}
+
+const GAME_DEAL_RANDOM = () => {
+    //Generates a random deck and places it into the stock.
+    let target = STATE.OBJECT_TREE.find(item=> item.name === 'stock');
+    let myDeck = new Deck;
+    let myGame = STATE.OBJECT_TREE.find(item=> item.name == 'gameBoard');
+    myDeck.random(target, myGame);
+
+    //Create deck string
+    let deckString = '';
+    target.cards.forEach(item => {
+        deckString += item.name;
+        //console.log(item.name);
+    })
+    console.log(deckString);
+    console.log(deckString.length);
+    GAME_DEAL();
+    //this.deal();
 }
 
 const GAME_DEAL_SOLVABLE = () => {
@@ -195,6 +235,7 @@ export {
     CARD_AUTO_MOVE,
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,
+    GAME_DEAL_RANDOM,
     PILE_STOCK_CLICK,
     REFRESH_SCREEN,
     WINDOW_MOUSE_MOVE,
