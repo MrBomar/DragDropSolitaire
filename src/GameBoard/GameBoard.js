@@ -6,10 +6,9 @@ import Foundation from '../Foundation/Foundation';
 import Tableau from '../Tableau/Tableau';
 import GameMenu from '../GameMenu/GameMenu';
 
-class GameBoard {
+export default class GameBoard {
     constructor() {
         this.name = 'gameBoard';
-        this.dealRandom = this.element.bind(this);
         this.element = this.element.bind(this);
         this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
@@ -43,15 +42,11 @@ class GameBoard {
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
 
-        //Deal the cards
-        this.dealRandom();
-
         //Add Menu
         STATE.GAME_MENU = new GameMenu(document.body);
-
     }
 
     refresh(){}
 }
 
-export default GameBoard;
+//export default GameBoard;

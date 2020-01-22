@@ -1,7 +1,6 @@
 import {GAME_DEAL_RANDOM} from '../Globals/Globals';
 import Action from "../Action/Action";
 import './GameMenu.css';
-//import GameBoard from '../GameBoard/GameBoard';
 import MenuButton from '../MenuButton/MenuButton';
 import CloseButton from '../CloseButton/CloseButton';
 

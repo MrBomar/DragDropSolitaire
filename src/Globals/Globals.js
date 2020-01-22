@@ -2,6 +2,7 @@ import Action from "../Action/Action";
 import STATE from "../State/State";
 import Pile from "../Pile/Pile";
 import Deck from "../Deck/Deck";
+import Tableau from "../Tableau/Tableau";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
@@ -115,6 +116,9 @@ const CARD_DRAG_END = () => {
                 
                 //Create the move object and add it to the state.
                 STATE.CARD_MOVE_HISTORY.push(new Action.MoveCard());
+                
+                //Check to see if from pile is a tableau and flip
+                TABLEAU_TOP_CARD_FLIP();
             }
         };
     }
@@ -129,6 +133,19 @@ const CARD_DRAG_END = () => {
     STATE.CARD_DRAG_STATUS = false;
     STATE.CARD_DROP_PILE = false;
     REFRESH_SCREEN();
+}
+
+const TABLEAU_TOP_CARD_FLIP = () => {
+    //Check to see if from pile is Tableau
+    if(STATE.CARD_DRAG_PILE instanceof Tableau){
+        //Check to see if top card is face up
+        if(STATE.CARD_DRAG_PILE.cards.length){
+            if(!STATE.CARD_DRAG_PILE.topCard().face){
+                //If top card is face up, then push flip
+                STATE.CARD_MOVE_HISTORY.push( new Action.FlipCard(STATE.CARD_DRAG_PILE.topCard()));
+            }
+        }
+    }
 }
 
 const GAME_DEAL = () => {
