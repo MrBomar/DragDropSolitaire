@@ -132,7 +132,6 @@ const GAME_DEAL_RANDOM = () => {
     let deckString = '';
     target.cards.forEach(item => {
         deckString += item.name;
-        //console.log(item.name);
     })
     GAME_DEAL();
 }

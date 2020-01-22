@@ -17,9 +17,7 @@ const ToggleMenu = () => {
 }
 
 const Undo = () => {
-    console.log(STATE.CARD_MOVE_HISTORY);
     if (STATE.CARD_MOVE_HISTORY.length){
-        console.log(`Length: ${STATE.CARD_MOVE_HISTORY.length}`);
         let move = STATE.CARD_MOVE_HISTORY.pop();
         move.reverse();
     }

@@ -1,7 +1,7 @@
 import {SuiteValues, CardValues} from '../Conversion/Conversion';
 import Card from '../Card/Card';
 
-class Deck {
+export default class Deck {
     constructor(){
         this.random = this.random.bind(this);
         this.randomizeArray = this.randomizeArray.bind(this);
@@ -74,5 +74,3 @@ class Deck {
         return finishedDeck;
     }
 }
-
-export default Deck;

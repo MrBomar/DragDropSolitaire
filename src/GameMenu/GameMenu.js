@@ -4,7 +4,7 @@ import './GameMenu.css';
 import MenuButton from '../MenuButton/MenuButton';
 import CloseButton from '../CloseButton/CloseButton';
 
-class GameMenu {
+export default class GameMenu {
     constructor(parentDocument){
         this.parentDocument = parentDocument;
         this.menuItems = [];
@@ -48,5 +48,3 @@ class GameMenu {
         this.hideReveal();
     }
 }
-
-export default GameMenu;

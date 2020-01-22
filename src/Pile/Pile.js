@@ -1,6 +1,6 @@
 import './Pile.css';
 
-class Pile {
+export default class Pile {
     constructor(parent, name) {
         this.parent = parent;
         this.name = name;
@@ -63,5 +63,3 @@ class Pile {
         return this.cards.splice(cardIndex, this.cards.length - cardIndex);
     }
 }
-
-export default Pile;

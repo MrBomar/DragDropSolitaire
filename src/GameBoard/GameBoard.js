@@ -48,5 +48,3 @@ export default class GameBoard {
 
     refresh(){}
 }
-
-//export default GameBoard;

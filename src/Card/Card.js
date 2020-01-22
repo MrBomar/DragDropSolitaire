@@ -2,7 +2,7 @@ import {ToSymbol, ToFaceValue} from '../Conversion/Conversion';
 import {CARD_MOUSE_DOWN} from '../Globals/Globals';
 import './Card.css';
 
-class Card {
+export default class Card {
     constructor(set, suite, value, parent, face){
         this.color = (suite === 'H' || suite === 'D')?'red':'black';
         this.face = face;
@@ -107,5 +107,3 @@ class Card {
         this.zIndex = z;
     };
 }
-
-export default Card;
