@@ -1,6 +1,5 @@
 import {ToSymbol, ToFaceValue} from '../Conversion/Conversion';
 import {CARD_MOUSE_DOWN} from '../Globals/Globals';
-import STATE from '../State/State';
 import './Card.css';
 
 class Card {

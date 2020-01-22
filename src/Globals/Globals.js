@@ -2,7 +2,8 @@ import Action from "../Action/Action";
 import STATE from "../State/State";
 import Pile from "../Pile/Pile";
 import Deck from "../Deck/Deck";
-import Tableau from "../Tableau/Tableau";
+import CardAction from "../CardMoves/CardAction";
+import MoveCard from "../CardMoves/MoveCard";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
@@ -19,17 +20,8 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
     //Eventually this will need to be animated.
     //NEEDS FIXED
 
-    //Identify the from pile.
-    STATE.CARD_DRAG_PILE = fromPile;
-
-    //Select cards from the pile.
-    STATE.CARD_DRAG_CARDS = fromPile.selectCards(targetCard);
-
-    //Identiy the to pile.
-    STATE.CARD_DROP_PILE = toPile;
-
     //Create the move object and add it to the state.
-    let tempMove = new Action.MoveCard();
+    let tempMove = new MoveCard(fromPile, fromPile.selectCards(targetCard), toPile);
     if(!deal) STATE.CARD_MOVE_HISTORY.push(tempMove);
 }
 
@@ -89,39 +81,9 @@ const CARD_DRAG_END = () => {
     STATE.WINDOW_MOUSE_POS[1] >= pile.getTop() &&
     STATE.WINDOW_MOUSE_POS[1] <= pile.getBottom());
 
-    if(STATE.CARD_DRAG_PILE.name === "stock"){
-        //Drop pile set in the state.
-        STATE.CARD_DROP_PILE = ALL_PILES().find(pile => pile.name == 'talon');
+    if(STATE.CARD_DRAG_PILE.name === "stock") STATE.CARD_DROP_PILE = ALL_PILES().find(pile => pile.name == 'talon');    
 
-        //Combined Move
-        let combination = []
-        
-        //Top stock card is flipped
-        STATE.CARD_DRAG_CARDS.forEach(card => combination.push(new Action.FlipCard(card)));
-
-        //Create the move object and add it to the state.
-        combination.push(new Action.MoveCard());
-
-        //Add combination move to state history
-        STATE.CARD_MOVE_HISTORY.push(new Action.CombinedMove(combination));
-
-    //Methods to carry out if the mouse is over a pile on mouseup
-    } else if(STATE.CARD_DROP_PILE) {
-
-        //Action to carry out if the drop pile is anything other than Talon
-        if(STATE.CARD_DROP_PILE.name != 'talon') {
-            
-            //Action to carry out if the move is valid.
-            if(STATE.CARD_DROP_PILE.validateMove(STATE.CARD_DRAG_CARDS)){
-                
-                //Create the move object and add it to the state.
-                STATE.CARD_MOVE_HISTORY.push(new Action.MoveCard());
-                
-                //Check to see if from pile is a tableau and flip
-                TABLEAU_TOP_CARD_FLIP();
-            }
-        };
-    }
+    if(STATE.CARD_DROP_PILE) new CardAction(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS, STATE.CARD_DROP_PILE);
 
     // //Drop all cards
     // STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
@@ -133,19 +95,6 @@ const CARD_DRAG_END = () => {
     STATE.CARD_DRAG_STATUS = false;
     STATE.CARD_DROP_PILE = false;
     REFRESH_SCREEN();
-}
-
-const TABLEAU_TOP_CARD_FLIP = () => {
-    //Check to see if from pile is Tableau
-    if(STATE.CARD_DRAG_PILE instanceof Tableau){
-        //Check to see if top card is face up
-        if(STATE.CARD_DRAG_PILE.cards.length){
-            if(!STATE.CARD_DRAG_PILE.topCard().face){
-                //If top card is face up, then push flip
-                STATE.CARD_MOVE_HISTORY.push( new Action.FlipCard(STATE.CARD_DRAG_PILE.topCard()));
-            }
-        }
-    }
 }
 
 const GAME_DEAL = () => {
@@ -185,10 +134,7 @@ const GAME_DEAL_RANDOM = () => {
         deckString += item.name;
         //console.log(item.name);
     })
-    console.log(deckString);
-    console.log(deckString.length);
     GAME_DEAL();
-    //this.deal();
 }
 
 const GAME_DEAL_SOLVABLE = () => {
@@ -249,6 +195,7 @@ const WINDOW_MOUSE_UP = (event) => {
 }
 
 export {
+    ALL_PILES,
     CARD_AUTO_MOVE,
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,
