@@ -73,4 +73,4 @@ export default class Deck {
         })
         return finishedDeck;
     }
-}
+}   

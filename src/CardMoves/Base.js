@@ -1,5 +1,5 @@
-import {REFRESH_SCREEN} from "../Globals/Globals";
-import STATE from '../State/State';
+import { REFRESH_SCREEN } from "../Globals/Globals";
+import { STATE } from '../index';
 
 export default class Base {
     constructor(){

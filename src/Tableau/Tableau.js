@@ -1,3 +1,4 @@
+import Card from "../Card/Card";
 import Pile from '../Pile/Pile';
 import {FromAlpha} from '../Conversion/Conversion';
 import './Tableau.css';
@@ -15,12 +16,7 @@ export default class Tableau extends Pile {
     }
 
     solved() {
-        this.cards.forEach(crd => {
-            if(!crd.face){
-                return false;
-            }
-        })
-        return true;
+        return (this.cards.find(crd=>crd.face == false) instanceof Card) ? false : true;
     }
 
     refresh() {

@@ -8,6 +8,7 @@ export default class Pile {
         this.cards = [];
         this.addCards = this.addCards.bind(this);
         this.cardCount = this.cardCount.bind(this);
+        this.destruct = this.destruct.bind(this);
         this.element = this.element.bind(this);
         this.getBottom = this.getBottom.bind(this);
         this.getHeight = this.getHeight.bind(this);
@@ -27,6 +28,13 @@ export default class Pile {
 
     cardCount() {
         return this.cards.length;
+    }
+
+    destruct() {
+        this.cards.forEach(crd => crd.destruct());
+        console.log(`${this.name} destructor has been called`);
+        console.log(this.element());
+        this.element().remove();
     }
 
     element() {

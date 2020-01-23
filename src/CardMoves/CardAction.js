@@ -3,8 +3,9 @@ import MoveCard from './MoveCard';
 import FlipCard from './FlipCard';
 import CombinedMove from './CombinedMove';
 import Stock from '../Stock/Stock';
-import STATE from '../State/State';
+import { STATE } from '../index';
 import Tableau from '../Tableau/Tableau';
+import GameBoard from '../GameBoard/GameBoard';
 
 export default class CardAction {
     constructor(fromPile, cards, toPile) {
@@ -35,6 +36,7 @@ export default class CardAction {
 
     execute() {
         STATE.CARD_MOVE_HISTORY.push(new CombinedMove(this.actions));
+        if(STATE.OBJECT_TREE.find(pile=>pile instanceof GameBoard).detectWin()) STATE.GAME_WIN_DETECTED = true;
     }
 
     getPile(name) {

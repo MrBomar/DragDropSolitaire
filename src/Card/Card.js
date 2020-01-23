@@ -57,6 +57,11 @@ export default class Card {
         this.element().classList.remove('shade');
     }
 
+    destruct(){
+        this.clickEvents.forEach(item => this.element().removeEventListener(item.trigger, item.action));
+        this.element().remove();
+    }
+
     element() {
         return document.getElementById(this.name);
     }

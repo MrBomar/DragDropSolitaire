@@ -1,10 +1,9 @@
-import STATE from '../State/State';
 import './GameBoard.css';
 import Stock from '../Stock/Stock';
 import Talon from '../Talon/Talon';
 import Foundation from '../Foundation/Foundation';
 import Tableau from '../Tableau/Tableau';
-import GameMenu from '../GameMenu/GameMenu';
+import { STATE } from '../index';
 
 export default class GameBoard {
     constructor() {
@@ -26,12 +25,18 @@ export default class GameBoard {
         return this.allTableau().find(pile => pile.solved() == false)? false: true;
     }
 
-    element(){
+    destruct() {
+        this.element.remove();
+    }
+
+    element() {
         //Return the DOM object
         return document.getElementById(this.name);
     }
 
-    render(){
+    render() {
+        console.log("GameBoard is created and now rendering");
+        console.log(STATE);
         //Generate the main game board and grid layout.
         let me = document.createElement('div');
         me.id = this.name;
@@ -53,8 +58,8 @@ export default class GameBoard {
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
 
-        //Add Menu
-        STATE.GAME_MENU = new GameMenu(document.body);
+        console.log("Piles created and added to state");
+        console.log(STATE);
     }
 
     refresh(){}

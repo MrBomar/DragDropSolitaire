@@ -1,9 +1,11 @@
 import Action from "../Action/Action";
-import STATE from "../State/State";
 import Pile from "../Pile/Pile";
 import Deck from "../Deck/Deck";
 import CardAction from "../CardMoves/CardAction";
 import MoveCard from "../CardMoves/MoveCard";
+import GameBoard from "../GameBoard/GameBoard";
+import { STATE } from "../index";
+import { ToFaceValue } from "../Conversion/Conversion";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
@@ -22,7 +24,7 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
 
     //Create the move object and add it to the state.
     let tempMove = new MoveCard(fromPile, fromPile.selectCards(targetCard), toPile);
-    if(!deal) STATE.CARD_MOVE_HISTORY.push(tempMove);
+    if(deal) STATE.CARD_MOVE_HISTORY.push(tempMove);
 }
 
 const CARD_CLICK_START = (e) => {
@@ -114,6 +116,8 @@ const GAME_DEAL = () => {
         ['tableau7',true]
     ];
 
+    console.log("GAME_DEAL has been called");
+
     //Iterate through the deal order and perform the card moves.
     dealOrder.forEach(item => {
         let cardArray = fromPile.topCard();
@@ -121,14 +125,25 @@ const GAME_DEAL = () => {
         if(item[1]) cardArray.flip();
         CARD_AUTO_MOVE(fromPile, cardArray, toPile, false);
     });
+
+    console.log(STATE);
 }
 
 const GAME_DEAL_RANDOM = () => {
+    //New game
+    console.log("Start of the GAME_DEAL_RANDOM");
+    console.log(STATE);
+    GAME_NEW_GAME();
+
     //Generates a random deck and places it into the stock.
     let target = STATE.OBJECT_TREE.find(item=> item.name === 'stock');
     let myDeck = new Deck;
     let myGame = STATE.OBJECT_TREE.find(item=> item.name == 'gameBoard');
     myDeck.random(target, myGame);
+    console.log("Deck has been created and added to stock");
+    console.log(STATE);
+    console.log("Here is the cards in Stock");
+    console.log(target.cards);
 
     //Create deck string
     let deckString = '';
@@ -142,8 +157,18 @@ const GAME_DEAL_SOLVABLE = () => {
     
 }
 
+const GAME_NEW_GAME = () => {
+    //Create new object tree
+    STATE.reset();
+    console.log("Post Reset");
+    console.log(STATE);
+
+    //Build new GameBoard
+    STATE.OBJECT_TREE.push(new GameBoard);
+}
+
 const DETECT_MOBILE_USER = () => {
-    ["Mobile","Phone","Pixel","Android","Opera Mini"].forEach(device=>{
+    ["Mobile","Phone","Pixel","Android","Opera Mini"].forEach(device=> {
         STATE.GAME_MOBILE_USER = (navigator.userAgent.includes(device))? true: false;
     })
 }

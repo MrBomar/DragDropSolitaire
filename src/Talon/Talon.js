@@ -17,6 +17,5 @@ export default class Talon extends Pile {
     }
 
     validateMove(aCard){
-        console.log('Validate Move');
     }
 }
