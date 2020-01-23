@@ -35,8 +35,6 @@ export default class GameBoard {
     }
 
     render() {
-        console.log("GameBoard is created and now rendering");
-        console.log(STATE);
         //Generate the main game board and grid layout.
         let me = document.createElement('div');
         me.id = this.name;
@@ -57,9 +55,6 @@ export default class GameBoard {
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau5'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
-
-        console.log("Piles created and added to state");
-        console.log(STATE);
     }
 
     refresh(){}

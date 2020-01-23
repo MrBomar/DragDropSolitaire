@@ -34,10 +34,9 @@ export default class State {
         this.CARD_DROP_PILE = false;
         this.CARD_MOUSE_DBL_CLICK = false;
         this.CARD_MOUSE_DBL_CLICK_TARGET = false;
-        console.log('Reset was called');
         this.CARD_MOVE_HISTORY.length = 0;
         this.GAME_WIN_DETECTED = false;
-        this.OBJECT_TREE = [];
+        this.OBJECT_TREE.length = 0;
         this.WINDOW_MOUSE_POS = false;
         this.WINDOW_MENU_OPEN = true; 
     }

@@ -32,8 +32,6 @@ export default class Pile {
 
     destruct() {
         this.cards.forEach(crd => crd.destruct());
-        console.log(`${this.name} destructor has been called`);
-        console.log(this.element());
         this.element().remove();
     }
 
