@@ -85,8 +85,10 @@ const CARD_DRAG_END = () => {
 
     if(STATE.CARD_DROP_PILE) new CardAction(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS, STATE.CARD_DROP_PILE);
 
-    // //Drop all cards
-    // STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
+    //Drop all cards
+    STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
+
+    //Determine if play has won
 
     //Clear drop STATE
     STATE.CARD_DRAG_CARDS = false;

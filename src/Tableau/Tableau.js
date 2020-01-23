@@ -9,8 +9,18 @@ export default class Tableau extends Pile {
         this.limit = name.charAt(name.length-1);
         this.refresh = this.refresh.bind(this);
         this.render = this.render.bind(this);
+        this.solved = this.solved.bind(this);
         this.validateMove = this.validateMove.bind(this);
         this.render();
+    }
+
+    solved() {
+        this.cards.forEach(crd => {
+            if(!crd.face){
+                return false;
+            }
+        })
+        return true;
     }
 
     refresh() {
@@ -45,5 +55,4 @@ export default class Tableau extends Pile {
             return true;
         }
     }
-
 }

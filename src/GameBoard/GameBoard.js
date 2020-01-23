@@ -9,10 +9,21 @@ import GameMenu from '../GameMenu/GameMenu';
 export default class GameBoard {
     constructor() {
         this.name = 'gameBoard';
+        this.allTableau = this.allTableau.bind(this);
+        this.detectWin = this.detectWin.bind(this);
         this.element = this.element.bind(this);
         this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
         this.render();
+    }
+
+    allTableau() {
+        return STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau);
+    }
+
+    detectWin() {
+        //Cycles the Tableau and checks to see if any piles are unsolved
+        return this.allTableau().find(pile => pile.solved() == false)? false: true;
     }
 
     element(){
