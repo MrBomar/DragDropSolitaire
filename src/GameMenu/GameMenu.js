@@ -42,8 +42,6 @@ export default class GameMenu {
     }
 
     refresh(){
-        let me = document.getElementById('statusIndicatorMessage');
-        
         //Add refresh properties
         this.hideReveal();
     }

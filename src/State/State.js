@@ -2,6 +2,7 @@ import Pile from "../Pile/Pile";
 
 export default class State {
     constructor(){
+        this.GAME_CARDS_STRING = false;
         this.GAME_DRAG_OPTION = true;
         this.GAME_MOBILE_USER = false;
         this.CARD_DRAG_STATUS = false;
@@ -25,6 +26,7 @@ export default class State {
                 item.destruct();
             };
         })
+        this.GAME_CARDS_STRING = false;
         this.GAME_DRAG_OPTION = true;
         this.GAME_MOBILE_USER = false;
         this.CARD_DRAG_STATUS = false;

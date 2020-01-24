@@ -140,6 +140,7 @@ const GAME_DEAL_RANDOM = () => {
     target.cards.forEach(item => {
         deckString += item.name;
     })
+    STATE.GAME_CARDS_STRING = deckString;
     GAME_DEAL();
 }
 

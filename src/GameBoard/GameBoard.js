@@ -4,6 +4,7 @@ import Talon from '../Talon/Talon';
 import Foundation from '../Foundation/Foundation';
 import Tableau from '../Tableau/Tableau';
 import { STATE } from '../index';
+import QuickSolve from '../QuickSolve/QuickSolve';
 
 export default class GameBoard {
     constructor() {
@@ -55,6 +56,7 @@ export default class GameBoard {
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau5'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
         STATE.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
+        STATE.OBJECT_TREE.push(new QuickSolve(this));
     }
 
     refresh(){}

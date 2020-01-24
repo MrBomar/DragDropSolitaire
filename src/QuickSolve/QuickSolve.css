@@ -1,0 +1,40 @@
+#quickSolve {
+    outline: none;
+    border: none;
+    height: 10vw;
+    width: 13vw;
+    background-color: orange;
+    grid-row: 2;
+    grid-column: 6;
+    font-size: 3vw;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0.5vw 0.5vw black;
+    border: none;
+    text-align: center;
+    padding: 0px;
+    margin-top: 5vw;
+    border-radius: 10%;
+}
+
+#quickSolve:active {
+    margin-top: 5.5vw;
+    margin-left: 0.5vw;
+    border: 1px solid black;
+    box-shadow: none;
+}
+
+@media screen and (min-aspect-ratio: 741 / 741){
+    #quickSolve {
+        font-size: 3vh;
+        box-shadow: 0.5vh 0.5vh black;
+        margin-top: 5vh;
+        height: 10vh;
+        width: 13vh;
+    }
+
+    #quickSolve:active {
+        margin-top: 5.5vh;
+        margin-left: 0.5vh;
+    }
+}
