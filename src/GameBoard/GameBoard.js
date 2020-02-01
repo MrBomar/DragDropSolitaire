@@ -27,7 +27,7 @@ export default class GameBoard {
     }
 
     destruct() {
-        this.element.remove();
+        this.element().remove();
     }
 
     element() {

@@ -1,0 +1,251 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "c:\\Users\\Leslie\\Documents\\Development\\Apache\\solitaire2",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2020-01-26 13:54:38",
+            "filesum": 39,
+            "codesum": 8726,
+            "commentsum": 82,
+            "blanksum": 226,
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "index.html"
+                },
+                {
+                    "blank": 0,
+                    "code": 7306,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "READ.ME"
+                },
+                {
+                    "blank": 4,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src\\Action\\Action.js"
+                },
+                {
+                    "blank": 20,
+                    "code": 109,
+                    "comment": 0,
+                    "filename": "src\\Card\\Card.css"
+                },
+                {
+                    "blank": 14,
+                    "code": 96,
+                    "comment": 4,
+                    "filename": "src\\Card\\Card.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src\\CardMoves\\Base.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 46,
+                    "comment": 4,
+                    "filename": "src\\CardMoves\\CardAction.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src\\CardMoves\\CombinedMove.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src\\CardMoves\\FlipCard.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src\\CardMoves\\MoveCard.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src\\CloseButton\\CloseButton.css"
+                },
+                {
+                    "blank": 3,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src\\CloseButton\\CloseButton.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src\\Conversion\\Conversion.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 64,
+                    "comment": 6,
+                    "filename": "src\\Deck\\Deck.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src\\Foundation\\Foundation.css"
+                },
+                {
+                    "blank": 3,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src\\Foundation\\Foundation.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src\\GameBoard\\GameBoard.css"
+                },
+                {
+                    "blank": 8,
+                    "code": 51,
+                    "comment": 4,
+                    "filename": "src\\GameBoard\\GameBoard.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 50,
+                    "comment": 0,
+                    "filename": "src\\GameMenu\\GameMenu.css"
+                },
+                {
+                    "blank": 6,
+                    "code": 38,
+                    "comment": 5,
+                    "filename": "src\\GameMenu\\GameMenu.js"
+                },
+                {
+                    "blank": 46,
+                    "code": 153,
+                    "comment": 36,
+                    "filename": "src\\Globals\\Globals.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 1,
+                    "filename": "src\\index.css"
+                },
+                {
+                    "blank": 3,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src\\index.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src\\MenuButton\\MenuButton.css"
+                },
+                {
+                    "blank": 3,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src\\MenuButton\\MenuButton.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 33,
+                    "comment": 0,
+                    "filename": "src\\Pile\\Pile.css"
+                },
+                {
+                    "blank": 12,
+                    "code": 72,
+                    "comment": 1,
+                    "filename": "src\\Pile\\Pile.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src\\QuickSolve\\QuickSolve.css"
+                },
+                {
+                    "blank": 17,
+                    "code": 116,
+                    "comment": 20,
+                    "filename": "src\\QuickSolve\\QuickSolve.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "src\\State\\State.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src\\Stock\\Stock.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "src\\Tableau\\Tableau.css"
+                },
+                {
+                    "blank": 5,
+                    "code": 50,
+                    "comment": 0,
+                    "filename": "src\\Tableau\\Tableau.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src\\Talon\\Talon.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src\\test.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "webpack.config.js"
+                }
+            ]
+        }
+    ]
+}

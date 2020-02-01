@@ -5,3 +5,7 @@
     text-size-adjust: none;
     user-select: none;
 }
+
+.hide {
+    display: none;
+}

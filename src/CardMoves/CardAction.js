@@ -6,11 +6,12 @@ import Stock from '../Stock/Stock';
 import { STATE } from '../index';
 import Tableau from '../Tableau/Tableau';
 import GameBoard from '../GameBoard/GameBoard';
+import Card from '../Card/Card';
 
 export default class CardAction {
     constructor(fromPile, cards, toPile) {
         this.actions = [];
-        this.cards = cards;
+        this.cards = (cards instanceof Card)? [cards] : cards;
         this.fromPile = fromPile;
         this.toPile = toPile;
         this.assess = this.assess.bind(this);
@@ -20,23 +21,32 @@ export default class CardAction {
     }
 
     assess() {
-        if(this.fromPile instanceof Stock) {
-            //Combine actions
+        if(this.fromPile instanceof Stock && this.fromPile.cards.length > 0) {
             this.actions.push(new FlipCard(this.cards[0]));
             this.actions.push(new MoveCard(this.fromPile, this.cards, this.toPile));
             this.execute();
+            return true;
         } else if (this.toPile.validateMove(this.cards)) {
+            console.log("CardAction.assess MoveCard executed");
             this.actions.push(new MoveCard(this.fromPile, this.cards, this.toPile));
             if(this.fromPile instanceof Tableau && this.fromPile.cards.length > 0) {
-                if(!this.fromPile.topCard().face)this.actions.push(new FlipCard(this.fromPile.topCard()));
+                if(!this.fromPile.topCard().face) {
+                    this.actions.push(new FlipCard(this.fromPile.topCard()))
+                }
             }
             this.execute();
+            return true;
+        } else {
+            return false;
         }
     }
 
     execute() {
         STATE.CARD_MOVE_HISTORY.push(new CombinedMove(this.actions));
+        //STATE.GAME_WIN_DETECTED = true;  //Condition used for testing
         if(STATE.OBJECT_TREE.find(pile=>pile instanceof GameBoard).detectWin()) STATE.GAME_WIN_DETECTED = true;
+        //FIX ME
+        //From here we can call the function to send solved deck string to server
     }
 
     getPile(name) {

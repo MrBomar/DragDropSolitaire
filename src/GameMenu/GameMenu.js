@@ -1,4 +1,4 @@
-import {GAME_DEAL_RANDOM} from '../Globals/Globals';
+import {GAME_DEAL_RANDOM, GAME_DEAL_SOLVABLE} from '../Globals/Globals';
 import Action from "../Action/Action";
 import './GameMenu.css';
 import MenuButton from '../MenuButton/MenuButton';
@@ -31,7 +31,8 @@ export default class GameMenu {
         this.menuItems.push(new CloseButton(Action.ToggleMenu));
         this.menuItems.push(new MenuButton('Close', Action.ToggleMenu));
         this.menuItems.push(new MenuButton('Undo', Action.Undo));
-        this.menuItems.push(new MenuButton('Deal Random', GAME_DEAL_RANDOM));
+        this.menuItems.push(new MenuButton('New Random Game', GAME_DEAL_RANDOM));
+        this.menuItems.push(new MenuButton('New Solvable Game', GAME_DEAL_SOLVABLE));
         this.menuItems.forEach(item=>{
             this.object.appendChild(item.build());
         })

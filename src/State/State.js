@@ -1,5 +1,3 @@
-import Pile from "../Pile/Pile";
-
 export default class State {
     constructor(){
         this.GAME_CARDS_STRING = false;
@@ -13,7 +11,7 @@ export default class State {
         this.CARD_MOUSE_DBL_CLICK = false;
         this.CARD_MOUSE_DBL_CLICK_TARGET = false;
         this.CARD_MOVE_HISTORY = [];
-        this.GAME_WIN_DETECTED = false;
+        this.GAME_WIN_DETECTED = true;
         this.OBJECT_TREE = [];
         this.WINDOW_MOUSE_POS = false;
         this.WINDOW_MENU_OPEN = true;
@@ -22,9 +20,7 @@ export default class State {
 
     reset() {
         this.OBJECT_TREE.forEach(item=>{
-            if(item instanceof Pile){
-                item.destruct();
-            };
+            item.destruct();
         })
         this.GAME_CARDS_STRING = false;
         this.GAME_DRAG_OPTION = true;
@@ -37,7 +33,7 @@ export default class State {
         this.CARD_MOUSE_DBL_CLICK = false;
         this.CARD_MOUSE_DBL_CLICK_TARGET = false;
         this.CARD_MOVE_HISTORY.length = 0;
-        this.GAME_WIN_DETECTED = false;
+        this.GAME_WIN_DETECTED = true;
         this.OBJECT_TREE.length = 0;
         this.WINDOW_MOUSE_POS = false;
         this.WINDOW_MENU_OPEN = true; 

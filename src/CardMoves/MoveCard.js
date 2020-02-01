@@ -12,6 +12,7 @@ export default class MoveCard extends Base {
     }
 
     execute(){
+        console.log("MoveCard.execute");
         this.toPile.addCards(this.fromPile.removeCards(this.cards));
         this.finish();
     }

@@ -1,3 +1,4 @@
+import Card from "../Card/Card";
 import Pile from '../Pile/Pile';
 import {ToSymbol} from '../Conversion/Conversion';
 import {FromAlpha} from '../Conversion/Conversion';
@@ -25,10 +26,11 @@ export default class Foundation extends Pile {
     }
 
     validateMove(aCard) {
-        if(aCard.length == 1) {
-            if(!!this.cardCount() && aCard[0].suite === this.suite) {
-                return(FromAlpha(this.topCard().value) === FromAlpha(aCard[0].value)-1)? true: false;
-            } else if(aCard[0].value === 'A' && aCard[0].suite === this.suite) {
+        let tempCard = (aCard instanceof Card)? [aCard] : aCard;
+        if(tempCard.length == 1) {
+            if(!!this.cardCount() && tempCard[0].suite === this.suite) {
+                return(FromAlpha(this.topCard().value) === FromAlpha(tempCard[0].value)-1)? true: false;
+            } else if(tempCard[0].value === 'A' && tempCard[0].suite === this.suite) {
                 return true;
             } else {
                 return false;

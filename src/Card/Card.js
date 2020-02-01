@@ -25,8 +25,12 @@ export default class Card {
             'card'
         ]
         this.addClass = this.addClass.bind(this);
+        this.destruct = this.destruct.bind(this);
+        this.drag = this.drag.bind(this);
+        this.drop = this.drop.bind(this);
         this.element = this.element.bind(this);
         this.flip = this.flip.bind(this);
+        this.getFace = this.getFace.bind(this);
         this.getTop = this.getTop.bind(this);
         this.getLeft = this.getLeft.bind(this);
         this.getHeight = this.getHeight.bind(this);
@@ -68,16 +72,18 @@ export default class Card {
 
     flip() {
         //Change the value
-        this.face = !this.face;
-        if(this.face){
+        if(!this.face){
             this.removeClass('cardBack');
             this.addClass('cardFront');
+            this.face = true;
         } else {
             this.addClass('cardBack');
             this.removeClass('cardFront');
+            this.face = false;
         }
     }
 
+    getFace() {return this.face};
     getTop() {return this.element().offsetTop};
     getLeft() {return this.element().offsetLeft};
     getHeight() {return this.element().offsetHeight};

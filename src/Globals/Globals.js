@@ -4,8 +4,8 @@ import Deck from "../Deck/Deck";
 import CardAction from "../CardMoves/CardAction";
 import MoveCard from "../CardMoves/MoveCard";
 import GameBoard from "../GameBoard/GameBoard";
+import Foundation from "../Foundation/Foundation";
 import { STATE } from "../index";
-import { ToFaceValue } from "../Conversion/Conversion";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
@@ -29,14 +29,12 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
 
 const CARD_CLICK_START = (e) => {
     //Click action to be handled here.
-    console.log("Click event game selected");
 }
 
 const CARD_MOUSE_DOWN = (event) => {
     //Double click detection
     if(STATE.CARD_MOUSE_DBL_CLICK && FIND_CARD(event.target) == STATE.CARD_MOUSE_DBL_CLICK_TARGET){
         //Insert here the actions desired for a double click.
-        console.log('Double click has occured');
     } else {
         STATE.CARD_MOUSE_DBL_CLICK_TARGET = FIND_CARD(event.target);
         STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
@@ -52,7 +50,7 @@ const CARD_MOUSE_DOWN = (event) => {
     }
 }
 
-const CARD_DRAG_START = () => {
+const CARD_DRAG_START = (event) => {
     //Capture cursor position
     STATE.CARD_DRAG_MOUSE_ORIG_POS = [event.clientX, event.clientY];
 
@@ -72,18 +70,16 @@ const CARD_DRAG_START = () => {
 
     //Shortcut if the drag pile is the stock
     if(STATE.CARD_DRAG_PILE.name === 'stock') CARD_DRAG_END();
-
 }
 
 const CARD_DRAG_END = () => {
-
     //Identify drop pile my cursor POS on mouseup.
     STATE.CARD_DROP_PILE = ALL_PILES().find(pile => STATE.WINDOW_MOUSE_POS[0] >= pile.getLeft() &&
     STATE.WINDOW_MOUSE_POS[0] <= pile.getRight() &&
     STATE.WINDOW_MOUSE_POS[1] >= pile.getTop() &&
     STATE.WINDOW_MOUSE_POS[1] <= pile.getBottom());
 
-    if(STATE.CARD_DRAG_PILE.name === "stock") STATE.CARD_DROP_PILE = ALL_PILES().find(pile => pile.name == 'talon');    
+    if(STATE.CARD_DRAG_PILE.name === "stock") STATE.CARD_DROP_PILE = ALL_PILES().find(pile => pile.name == 'talon');
 
     if(STATE.CARD_DROP_PILE) new CardAction(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS, STATE.CARD_DROP_PILE);
 
@@ -99,6 +95,38 @@ const CARD_DRAG_END = () => {
     STATE.CARD_DRAG_STATUS = false;
     STATE.CARD_DROP_PILE = false;
     REFRESH_SCREEN();
+}
+
+const GAME_CARDS_REMAIN = () => {
+    let activePiles = STATE.OBJECT_TREE.filter(pile => !(pile instanceof Foundation) && (pile instanceof Pile));
+    let pilesWithCards = activePiles.filter(pile => pile.cards.length > 0);
+    return (pilesWithCards.length)? true: false;
+}
+
+const GAME_CHECK_CARD_AGAINST_PILES = (fromPile, myCard, myPiles) => {
+    let myPilesTrimmed = myPiles.filter(pile=> pile != fromPile);
+    let found = false;
+    let i = 0;
+    while (found == false && i < myPilesTrimmed.length) {
+        if(myPilesTrimmed[i].validateMove(myCard)) {
+            //Check fromPile aboveCardValue() against toPile topCard.value
+            let redundancyCheck = fromPile.aboveCardValue(myCard);
+            let valueCheck = (myPilesTrimmed[i].cardCount() > 0) ? redundancyCheck != myPilesTrimmed[i].topCard().value : true;
+            if(redundancyCheck == false || valueCheck) {
+                STATE.CARD_DROP_PILE = myPilesTrimmed[i];
+                new CardAction(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS, STATE.CARD_DROP_PILE);
+                found = true;   
+            }
+        }
+        i++;
+    }
+    return found;
+}
+
+const GAME_FACEDOWN_CARDS_REMAIN = () => {
+    let activePiles = STATE.OBJECT_TREE.filter(pile => !(pile instanceof Foundation) && (pile instanceof Pile));
+    let pilesWithCards = activePiles.filter(pile => pile.nonFaceCards());
+    return (pilesWithCards.length)? true: false;
 }
 
 const GAME_DEAL = () => {
@@ -118,9 +146,9 @@ const GAME_DEAL = () => {
 
     //Iterate through the deal order and perform the card moves.
     dealOrder.forEach(item => {
-        let cardArray = fromPile.topCard();
+        let cardArray = [fromPile.topCard()];
         let toPile = STATE.OBJECT_TREE.find(pile => pile.name == item[0]);
-        if(item[1]) cardArray.flip();
+        if(item[1]) cardArray[0].flip();
         CARD_AUTO_MOVE(fromPile, cardArray, toPile, false);
     });
 }
@@ -140,12 +168,24 @@ const GAME_DEAL_RANDOM = () => {
     target.cards.forEach(item => {
         deckString += item.name;
     })
+    console.log(deckString);
     STATE.GAME_CARDS_STRING = deckString;
     GAME_DEAL();
 }
 
 const GAME_DEAL_SOLVABLE = () => {
-    
+    //New Game
+    GAME_NEW_GAME();
+
+    //Solvable String
+    STATE.GAME_CARDS_STRING = "ADJACBASLADLACJACAACKADCASFAHHAHJADGADAASAASMADEADDACDAHBAHMAHIAHCAHFASIACEADKACIACMAHAADMASCAHDASBADHACFAHEACGADBASKASDASHAHKACCAHGACHASGADIADFASJAHLASEACL";
+
+    //Build Deck
+    let myDeck = new Deck;
+    myDeck.reconstituteDeck(STATE.GAME_CARDS_STRING);
+
+    //Deal the cards
+    GAME_DEAL();
 }
 
 const GAME_NEW_GAME = () => {
@@ -162,7 +202,7 @@ const DETECT_MOBILE_USER = () => {
     })
 }
 
-const PILE_STOCK_CLICK = (event) => {
+const PILE_STOCK_CLICK = () => {
     let stock = ALL_PILES().find(item => item.name == 'stock');
     let talon = ALL_PILES().find(item => item.name == 'talon');
 
@@ -214,7 +254,11 @@ export {
     CARD_AUTO_MOVE,
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,
+    GAME_CARDS_REMAIN,
+    GAME_CHECK_CARD_AGAINST_PILES,
     GAME_DEAL_RANDOM,
+    GAME_DEAL_SOLVABLE,
+    GAME_FACEDOWN_CARDS_REMAIN,
     PILE_STOCK_CLICK,
     REFRESH_SCREEN,
     WINDOW_MOUSE_MOVE,
