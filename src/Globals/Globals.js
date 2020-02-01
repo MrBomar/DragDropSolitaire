@@ -6,11 +6,21 @@ import MoveCard from "../CardMoves/MoveCard";
 import GameBoard from "../GameBoard/GameBoard";
 import Foundation from "../Foundation/Foundation";
 import { STATE } from "../index";
+import Tableau from "../Tableau/Tableau";
 
 const ALL_PILES = () => STATE.OBJECT_TREE.filter(obj => obj instanceof Pile);
 
 //Isolate Card
 const FIND_CARD = (a) => (a.classList.contains('card'))? a: FIND_CARD(a.parentElement);
+
+const GET_CARD_OBJECT = (a) => {
+    let cardName = a.id;
+    let allCards = [];
+    ALL_PILES().forEach(pile => {
+        allCards = allCards.concat(pile.cards);
+    })
+    return allCards.find(crd => crd.name = cardName);
+}
 
 const REFRESH_SCREEN = () => {
     //This routine will cycle through state objects and refresh their related objects.
@@ -35,15 +45,44 @@ const CARD_MOUSE_DOWN = (event) => {
     //Double click detection
     if(STATE.CARD_MOUSE_DBL_CLICK && FIND_CARD(event.target) == STATE.CARD_MOUSE_DBL_CLICK_TARGET){
         //Insert here the actions desired for a double click.
+        
+        console.log("Double Click");
+
+        //Clear 
+    
+        //Initiate drag start
+        CARD_DRAG_START(event);
+
+        //Capture card object
+        let cardElement = FIND_CARD(event.target);
+        let cardObject = GET_CARD_OBJECT(cardElement);
+
+        //Run GAME_CHECK_CARD_AGAINST_PILES
+        let toPiles = STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau || pile instanceof Foundation);
+        GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE,cardObject,toPiles);
+
+        //Exit function
+        return true;
+
     } else {
+
+        //Starts double click timer - DO NOT ALTER
         STATE.CARD_MOUSE_DBL_CLICK_TARGET = FIND_CARD(event.target);
         STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
             STATE.CARD_MOUSE_DBL_CLICK = false;
             STATE.CARD_MOUSE_DBL_CLICK_TARGET = false;
+            console.log("Timer Expired");
         },300)
     }
     
     if(STATE.GAME_DRAG_OPTION) {
+        //Capture cursor position
+        STATE.CARD_DRAG_MOUSE_ORIG_POS = [event.clientX, event.clientY];
+
+        //Update drag status
+        STATE.CARD_DRAG_STATUS = true;
+        
+        //Initiate drag start
         CARD_DRAG_START(event);
     } else {
         CARD_CLICK_START(event);
@@ -51,28 +90,28 @@ const CARD_MOUSE_DOWN = (event) => {
 }
 
 const CARD_DRAG_START = (event) => {
-    //Capture cursor position
-    STATE.CARD_DRAG_MOUSE_ORIG_POS = [event.clientX, event.clientY];
+    console.log("CARD_DRAG_START initiated");
+    //Isolate the card DOM element
+    let cardElement = FIND_CARD(event.target);
 
-    //Update drag status
-    STATE.CARD_DRAG_STATUS = true;
-
-    //Cycle through the STATE.OBJECT_TREE and identify the pile that contains the card.
-    ALL_PILES().forEach(pile => {
-        if(pile.cards.find(card => FIND_CARD(event.target).id === card.name)) STATE.CARD_DRAG_PILE = pile;
-    })
+    //New Method
+    STATE.CARD_DRAG_PILE = FIND_PILE_USING_CARD_DOM_ELEMENT( cardElement ); //Works
     
     //Grab additional cards
-    STATE.CARD_DRAG_CARDS = STATE.CARD_DRAG_PILE.selectCards(FIND_CARD(event.target));
+    STATE.CARD_DRAG_CARDS = STATE.CARD_DRAG_PILE.selectCards( cardElement ); //Works
 
     //Set card drag start POS 
     STATE.CARD_DRAG_CARDS.forEach(card => card.dragStartPOS = [card.getLeft(), card.getTop()]);
 
     //Shortcut if the drag pile is the stock
     if(STATE.CARD_DRAG_PILE.name === 'stock') CARD_DRAG_END();
+
+    console.log(STATE);
 }
 
 const CARD_DRAG_END = () => {
+    console.log("CARD_DRAG_END initiated");
+
     //Identify drop pile my cursor POS on mouseup.
     STATE.CARD_DROP_PILE = ALL_PILES().find(pile => STATE.WINDOW_MOUSE_POS[0] >= pile.getLeft() &&
     STATE.WINDOW_MOUSE_POS[0] <= pile.getRight() &&
@@ -95,6 +134,11 @@ const CARD_DRAG_END = () => {
     STATE.CARD_DRAG_STATUS = false;
     STATE.CARD_DROP_PILE = false;
     REFRESH_SCREEN();
+}
+
+const FIND_PILE_USING_CARD_DOM_ELEMENT = (cardElement) => {
+    //Take cardElement and cycle through STATE.OBJECT_TREE to identify and return pile containing card.
+    return ALL_PILES().find(pile => pile.hasCard(cardElement.id));
 }
 
 const GAME_CARDS_REMAIN = () => {

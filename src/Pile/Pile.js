@@ -19,6 +19,7 @@ export default class Pile {
         this.getRight = this.getRight.bind(this);
         this.getTop = this.getTop.bind(this);
         this.getWidth = this.getWidth.bind(this);
+        this.hasCard = this.hasCard.bind(this);
         this.nonFaceCards = this.nonFaceCards.bind(this);
         this.refresh = this.refresh.bind(this);
         this.removeCards = this.removeCards.bind(this);
@@ -58,6 +59,8 @@ export default class Pile {
     getRight() {return this.getLeft() + this.element().offsetWidth};
     getTop() {return this.element().offsetTop};
     getWidth() {return this.element().offsetWidth};
+
+    hasCard(cardName) {return (this.cards.find(crd=>crd.name == cardName)) ? true : false; }
 
     nonFaceCards() {
         if(this.cardCount() > 0) {
