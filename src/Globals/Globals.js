@@ -37,32 +37,16 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
     if(deal) STATE.CARD_MOVE_HISTORY.push(tempMove);
 }
 
-const CARD_CLICK_START = (e) => {
-    //Click action to be handled here.
-}
-
 const CARD_MOUSE_DOWN = (event) => {
+    //UPDATE STATE
+    STATE.CARD_MOUSE_DOWN = true;
+
     //Double click detection
     if(STATE.CARD_MOUSE_DBL_CLICK && FIND_CARD(event.target) == STATE.CARD_MOUSE_DBL_CLICK_TARGET){
         //Insert here the actions desired for a double click.
-        
         console.log("Double Click");
-
-        //Clear 
-    
-        //Initiate drag start
-        CARD_DRAG_START(event);
-
-        //Capture card object
-        let cardElement = FIND_CARD(event.target);
-        let cardObject = GET_CARD_OBJECT(cardElement);
-
-        //Run GAME_CHECK_CARD_AGAINST_PILES
-        let toPiles = STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau || pile instanceof Foundation);
-        GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE,cardObject,toPiles);
-
-        //Exit function
-        return true;
+        
+        CARD_DOUBLE_CLICK();
 
     } else {
 
@@ -71,26 +55,19 @@ const CARD_MOUSE_DOWN = (event) => {
         STATE.CARD_MOUSE_DBL_CLICK = setTimeout(()=>{
             STATE.CARD_MOUSE_DBL_CLICK = false;
             STATE.CARD_MOUSE_DBL_CLICK_TARGET = false;
-            console.log("Timer Expired");
         },300)
-    }
-    
-    if(STATE.GAME_DRAG_OPTION) {
-        //Capture cursor position
-        STATE.CARD_DRAG_MOUSE_ORIG_POS = [event.clientX, event.clientY];
 
-        //Update drag status
-        STATE.CARD_DRAG_STATUS = true;
-        
-        //Initiate drag start
-        CARD_DRAG_START(event);
-    } else {
-        CARD_CLICK_START(event);
+        if(STATE.GAME_DRAG_OPTION) {
+            //Capture cursor position
+            STATE.CARD_DRAG_MOUSE_ORIG_POS = [event.clientX, event.clientY];
+            
+            //Initiate drag start
+            CARD_DRAG_START(event);
+        }
     }
 }
 
 const CARD_DRAG_START = (event) => {
-    console.log("CARD_DRAG_START initiated");
     //Isolate the card DOM element
     let cardElement = FIND_CARD(event.target);
 
@@ -105,13 +82,9 @@ const CARD_DRAG_START = (event) => {
 
     //Shortcut if the drag pile is the stock
     if(STATE.CARD_DRAG_PILE.name === 'stock') CARD_DRAG_END();
-
-    console.log(STATE);
 }
 
 const CARD_DRAG_END = () => {
-    console.log("CARD_DRAG_END initiated");
-
     //Identify drop pile my cursor POS on mouseup.
     STATE.CARD_DROP_PILE = ALL_PILES().find(pile => STATE.WINDOW_MOUSE_POS[0] >= pile.getLeft() &&
     STATE.WINDOW_MOUSE_POS[0] <= pile.getRight() &&
@@ -125,7 +98,8 @@ const CARD_DRAG_END = () => {
     //Drop all cards
     STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
 
-    //Determine if play has won
+    //Determine if player has won
+    //FIX ME
 
     //Clear drop STATE
     STATE.CARD_DRAG_CARDS = false;
@@ -134,6 +108,25 @@ const CARD_DRAG_END = () => {
     STATE.CARD_DRAG_STATUS = false;
     STATE.CARD_DROP_PILE = false;
     REFRESH_SCREEN();
+}
+
+const CARD_DOUBLE_CLICK = (event) => {
+    console.log("Process for AutoSolve");
+    // //Clear 
+
+    // //Initiate drag start
+    // CARD_DRAG_START(event);
+
+    // //Capture card object
+    // let cardElement = FIND_CARD(event.target);
+    // let cardObject = GET_CARD_OBJECT(cardElement);
+
+    // //Run GAME_CHECK_CARD_AGAINST_PILES
+    // let toPiles = STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau || pile instanceof Foundation);
+    // GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE,cardObject,toPiles);
+
+    // //Exit function
+    // return true;
 }
 
 const FIND_PILE_USING_CARD_DOM_ELEMENT = (cardElement) => {
@@ -261,10 +254,10 @@ const PILE_STOCK_CLICK = () => {
 }
 
 const WINDOW_MOUSE_MOVE = (event) => {
-    STATE.WINDOW_MOUSE_POS = [event.clientX,event.clientY];
-
-//Action if drag status is true
-    if(STATE.CARD_DRAG_STATUS != false){
+    //Action if drag status is true
+    if(STATE.CARD_MOUSE_DOWN){
+        STATE.WINDOW_MOUSE_POS = [event.clientX,event.clientY];
+        STATE.CARD_DRAG_STATUS = true;
 
         //Set the margin
         let margins = [
@@ -275,7 +268,7 @@ const WINDOW_MOUSE_MOVE = (event) => {
         //Drag the cards
         STATE.CARD_DRAG_CARDS.forEach(card => card.drag(margins));
     }
-//Action if drag status is false
+    //Action if drag status is false
     else {
 
         //Activate menu when mouseover left margin
@@ -286,6 +279,8 @@ const WINDOW_MOUSE_MOVE = (event) => {
 }
 
 const WINDOW_MOUSE_UP = (event) => {
+    //UPDATE STATE
+    STATE.CARD_MOUSE_DOWN = false;
     STATE.WINDOW_MOUSE_POS = [event.clientX, event.clientY];
 
     if(STATE.CARD_DRAG_STATUS == true){
