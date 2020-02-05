@@ -7,7 +7,7 @@ export default class Base {
     }
 
     finish(){
-        if(STATE.CARD_DRAG_CARDS.length) STATE.CARD_DRAG_CARDS.forEach(crd=>crd.drop());
+        if(STATE.CARD_ACTION.CARDS.length) STATE.CARD_ACTION.CARDS.forEach(crd=>crd.drop());
         REFRESH_SCREEN();
     }
 }

@@ -12,7 +12,6 @@ export default class MoveCard extends Base {
     }
 
     execute(){
-        console.log("MoveCard.execute");
         this.toPile.addCards(this.fromPile.removeCards(this.cards));
         this.finish();
     }
@@ -20,7 +19,6 @@ export default class MoveCard extends Base {
     reverse(){
         //Part of the undo feature, will undo the action.
         this.fromPile.addCards(this.toPile.removeCards(this.cards));
-        console.log(`MoveCard Reversed`);
         this.finish();
     }
 }

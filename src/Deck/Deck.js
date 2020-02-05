@@ -70,8 +70,8 @@ export default class Deck {
         }
 
         //Capture targets to pass
-        let parent = STATE.OBJECT_TREE.find(item=> item instanceof Stock);
-        let board = STATE.OBJECT_TREE.find(item=> item instanceof GameBoard);
+        let parent = STATE.GAME.OBJECT_TREE.find(item=> item instanceof Stock);
+        let board = STATE.GAME.OBJECT_TREE.find(item=> item instanceof GameBoard);
 
         //Build cards and push onto Stock
         individualCards.forEach(crd => {

@@ -27,7 +27,6 @@ export default class CardAction {
             this.execute();
             return true;
         } else if (this.toPile.validateMove(this.cards)) {
-            console.log("CardAction.assess MoveCard executed");
             this.actions.push(new MoveCard(this.fromPile, this.cards, this.toPile));
             if(this.fromPile instanceof Tableau && this.fromPile.cards.length > 0) {
                 if(!this.fromPile.topCard().face) {
@@ -42,9 +41,9 @@ export default class CardAction {
     }
 
     execute() {
-        STATE.CARD_MOVE_HISTORY.push(new CombinedMove(this.actions));
+        STATE.GAME.MOVE_HISTORY.push(new CombinedMove(this.actions));
         //STATE.GAME_WIN_DETECTED = true;  //Condition used for testing
-        if(STATE.OBJECT_TREE.find(pile=>pile instanceof GameBoard).detectWin()) STATE.GAME_WIN_DETECTED = true;
+        if(STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof GameBoard).detectWin()) STATE.GAME.WIN_DETECTED = true;
         //FIX ME
         //From here we can call the function to send solved deck string to server
     }
