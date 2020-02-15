@@ -17,3 +17,8 @@ window.addEventListener('mouseup', WINDOW_MOUSE_UP);
 window.addEventListener('touchend', WINDOW_MOUSE_UP);
 
 REFRESH_SCREEN();
+
+//This function will console.log the current state for debugging purposes
+const outputState = () => {console.log(STATE)};
+
+window.outputState = outputState;
