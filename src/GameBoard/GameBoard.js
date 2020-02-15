@@ -5,10 +5,17 @@ import Foundation from '../Foundation/Foundation';
 import Tableau from '../Tableau/Tableau';
 import { STATE } from '../index';
 import QuickSolve from '../QuickSolve/QuickSolve';
+import Action from '../Action/Action';
 
 export default class GameBoard {
     constructor() {
         this.name = 'gameBoard';
+        this.clickEvents = [
+            {
+                trigger: "click",
+                action: Action.ToggleMenu
+            }
+        ];
         this.allTableau = this.allTableau.bind(this);
         this.detectWin = this.detectWin.bind(this);
         this.element = this.element.bind(this);
@@ -18,7 +25,7 @@ export default class GameBoard {
     }
 
     allTableau() {
-        return STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau);
+        return STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau);
     }
 
     detectWin() {
@@ -41,22 +48,25 @@ export default class GameBoard {
         me.id = this.name;
         me.style.zIndex = -1;
         document.body.appendChild(me);
+        this.clickEvents.forEach(item => {
+            me.addEventListener(item.trigger, item.action);
+        })
 
         //Add the different types of piles to the game board.
-        STATE.OBJECT_TREE.push(new Stock(this, 'stock'));
-        STATE.OBJECT_TREE.push(new Talon(this, 'talon'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'spade', 'S'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'heart', 'H'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'club', 'C'));
-        STATE.OBJECT_TREE.push(new Foundation(this, 'diamond', 'D'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau1'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau2'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau3'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau4'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau5'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
-        STATE.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
-        STATE.OBJECT_TREE.push(new QuickSolve(this));
+        STATE.GAME.OBJECT_TREE.push(new Stock(this, 'stock'));
+        STATE.GAME.OBJECT_TREE.push(new Talon(this, 'talon'));
+        STATE.GAME.OBJECT_TREE.push(new Foundation(this, 'spade', 'S'));
+        STATE.GAME.OBJECT_TREE.push(new Foundation(this, 'heart', 'H'));
+        STATE.GAME.OBJECT_TREE.push(new Foundation(this, 'club', 'C'));
+        STATE.GAME.OBJECT_TREE.push(new Foundation(this, 'diamond', 'D'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau1'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau2'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau3'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau4'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau5'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau6'));
+        STATE.GAME.OBJECT_TREE.push(new Tableau(this, 'tableau7'));
+        STATE.GAME.OBJECT_TREE.push(new QuickSolve(this));
     }
 
     refresh(){}

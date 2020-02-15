@@ -8,9 +8,17 @@ let GAME_MENU = new GameMenu(document.body);
 export { STATE, GAME_MENU };
 
 DETECT_MOBILE_USER();
-REFRESH_SCREEN();
 
 window.addEventListener('resize', REFRESH_SCREEN);
 window.addEventListener('orientationchange', REFRESH_SCREEN);
+window.addEventListener('touchmove', WINDOW_MOUSE_MOVE);
 window.addEventListener('mousemove', WINDOW_MOUSE_MOVE);
 window.addEventListener('mouseup', WINDOW_MOUSE_UP);
+window.addEventListener('touchend', WINDOW_MOUSE_UP);
+
+REFRESH_SCREEN();
+
+//This function will console.log the current state for debugging purposes
+const outputState = () => {console.log(STATE)};
+
+window.outputState = outputState;

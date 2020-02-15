@@ -19,6 +19,10 @@ export default class Card {
             {
                 trigger: "mousedown",
                 action: CARD_MOUSE_DOWN
+            },
+            {
+                trigger: "touchstart",
+                action: CARD_MOUSE_DOWN
             }
         ];
         this.cssClasses = [

@@ -39,7 +39,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Development'
+            title: 'Development',
+            favicon: "./src/favicon.ico"
         })
     ],
     output: {

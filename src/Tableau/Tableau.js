@@ -41,14 +41,19 @@ export default class Tableau extends Pile {
     }
 
     validateMove(aCard) {
-        let tempCard = (aCard instanceof Card) ? [aCard] : aCard;
+        let tempCard = [];
+        if(aCard instanceof Card) {
+            tempCard.push(aCard);
+        } else {
+            tempCard = aCard;
+        }
         if(this.cards.length){
-            if((tempCard[0].color != this.topCard().color) && (FromAlpha(tempCard[0].value) == FromAlpha(this.topCard().value) -1)){
+            if((tempCard[0].color != this.topCard().color) && (FromAlpha(tempCard[0].value) == FromAlpha(this.topCard().value) - 1)) {
                 return true;
             } else {
                 return false;
             }   
-        } else if((FromAlpha(tempCard[0].value) == 12)){
+        } else if((FromAlpha(tempCard[0].value) == 12)) {
             return true;
         }
     }

@@ -41,19 +41,19 @@ export default class QuickSolve{
     }
 
     getFoundations() {
-        return STATE.OBJECT_TREE.filter(pile=>pile instanceof Foundation);
+        return STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Foundation);
     }
 
     getStock() {
-        return STATE.OBJECT_TREE.find(pile=>pile instanceof Stock);
+        return STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof Stock);
     }
 
     getTalon() {
-        return STATE.OBJECT_TREE.find(pile=>pile instanceof Talon);
+        return STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof Talon);
     }
 
     getTableau() {
-        return STATE.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
+        return STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
     }
 
     refresh() {
@@ -71,7 +71,7 @@ export default class QuickSolve{
 
     solve () {
         this.solveTimer = setInterval(() => {
-            if(GAME_CARDS_REMAIN) {        
+            if(GAME_CARDS_REMAIN()) {        
                 //Master Action
                 if(!this.checkTableauTopCards()) { //Check the Tableau topCard();
                     if(!this.checkTableauBottomCards()) { //Check the Tableau bottomCard;
@@ -94,8 +94,8 @@ export default class QuickSolve{
     }
 
     checkTableauBottomCards() {
-        let toPiles = STATE.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
-        let tempFromPiles = STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
+        let toPiles = STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
+        let tempFromPiles = STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
         let fromPiles = tempFromPiles.filter(pile => {
             if(pile.faceCards()) {
                 if(pile.faceCards()[0].value == "M" && pile.nonFaceCards() == false){
@@ -108,9 +108,9 @@ export default class QuickSolve{
         let found = false;
         let i = 0;
         while (found == false && i < fromPiles.length) {
-            STATE.CARD_DRAG_PILE = fromPiles[i];
-            STATE.CARD_DRAG_CARDS = fromPiles[i].faceCards();
-            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS[0], toPiles)){
+            STATE.CARD_ACTION_FROM_PILE = fromPiles[i];
+            STATE.CARD_ACTION_CARDS = fromPiles[i].faceCards();
+            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_FROM_PILE, STATE.CARD_ACTION_CARDS[0], toPiles)){
                 found = true;
             };
             i++;
@@ -120,8 +120,8 @@ export default class QuickSolve{
 
     checkTableauTopCards() {
         //Create toPiles and fromPiles array
-        let toPiles = (GAME_FACEDOWN_CARDS_REMAIN()) ? STATE.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation) : STATE.OBJECT_TREE.filter(pile=> pile instanceof Foundation);
-        let fromPiles = STATE.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
+        let toPiles = (GAME_FACEDOWN_CARDS_REMAIN()) ? STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation) : STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Foundation);
+        let fromPiles = STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
         let tempFromPiles = fromPiles.filter(pile => {
             if(pile.topCard().value == "M" && !pile.nonFaceCards() && GAME_FACEDOWN_CARDS_REMAIN()) {
                 return false;
@@ -132,9 +132,9 @@ export default class QuickSolve{
         let found = false;
         let i = 0;
         while (found == false && i < tempFromPiles.length) {
-            STATE.CARD_DRAG_PILE = tempFromPiles[i];
-            STATE.CARD_DRAG_CARDS = [tempFromPiles[i].topCard()];
-            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS[0], toPiles)){
+            STATE.CARD_ACTION_FROM_PILE = tempFromPiles[i];
+            STATE.CARD_ACTION_CARDS = [tempFromPiles[i].topCard()];
+            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_FROM_PILE, STATE.CARD_ACTION_CARDS[0], toPiles)){
                 found = true;
             };
             i++;
@@ -143,11 +143,11 @@ export default class QuickSolve{
     }
 
     checkTalon() {
-        STATE.CARD_DRAG_PILE = STATE.OBJECT_TREE.find(pile => pile instanceof Talon);
-        if(STATE.CARD_DRAG_PILE.cardCount()) {
-            let toPiles = STATE.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation);
-            STATE.CARD_DRAG_CARDS = [STATE.CARD_DRAG_PILE.topCard()];
-            return (GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_DRAG_PILE, STATE.CARD_DRAG_CARDS, toPiles));
+        STATE.CARD_ACTION_CARDS = STATE.GAME.OBJECT_TREE.find(pile => pile instanceof Talon);
+        if(STATE.CARD_ACTION_CARDS.cardCount()) {
+            let toPiles = STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation);
+            STATE.CARD_ACTION_CARDS = [STATE.CARD_ACTION_CARDS.topCard()];
+            return (GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_CARDS, STATE.CARD_ACTION_CARDS, toPiles));
         }
         return false;
     }
