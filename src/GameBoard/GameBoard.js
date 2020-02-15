@@ -32,6 +32,8 @@ export default class GameBoard {
 
     clickEvent(e) {
         e.preventDefault();
+        e.stopPropagation();
+        console.log(e);
         if(e.target.id == this.name)Action.ToggleMenu();
     }
 

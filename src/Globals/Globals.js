@@ -43,8 +43,11 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
 
 const CARD_MOUSE_DOWN = (event) => {
     //Added to prevent double firing of event.
+    event.stopPropagation();
     event.preventDefault();
     
+    console.log(event);
+
     //UPDATE STATE
     STATE.CARD_MOUSE.DOWN = true;
 
