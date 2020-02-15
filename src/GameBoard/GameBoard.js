@@ -10,14 +10,16 @@ import Action from '../Action/Action';
 export default class GameBoard {
     constructor() {
         this.name = 'gameBoard';
-        this.clickEvents = [
+        this.clickEvent = this.clickEvent.bind(this);
+        this.eventListeners = [
             {
                 trigger: "click",
-                action: Action.ToggleMenu
+                action: this.clickEvent
             }
         ];
         this.allTableau = this.allTableau.bind(this);
         this.detectWin = this.detectWin.bind(this);
+        this.destruct = this.destruct.bind(this);
         this.element = this.element.bind(this);
         this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
@@ -28,12 +30,20 @@ export default class GameBoard {
         return STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau);
     }
 
+    clickEvent(e) {
+        e.preventDefault();
+        if(e.target.id == this.name)Action.ToggleMenu();
+    }
+
     detectWin() {
         //Cycles the Tableau and checks to see if any piles are unsolved
         return this.allTableau().find(pile => pile.solved() == false)? false: true;
     }
 
     destruct() {
+        this.eventListeners.forEach(item => {
+            this.element().removeEventListener(item.trigger, item.action);
+        })
         this.element().remove();
     }
 
@@ -48,7 +58,7 @@ export default class GameBoard {
         me.id = this.name;
         me.style.zIndex = -1;
         document.body.appendChild(me);
-        this.clickEvents.forEach(item => {
+        this.eventListeners.forEach(item => {
             me.addEventListener(item.trigger, item.action);
         })
 
