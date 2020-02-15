@@ -54,7 +54,7 @@ const CARD_MOUSE_DOWN = (event) => {
     //Shortcut if mouse down is on stock.
     if(FIND_PILE_USING_CARD_DOM_ELEMENT(FIND_CARD(event.target)).name === 'stock') {
         STATE.CARD_ACTION.TARGET = targetCard;
-        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS;
+        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS(event);
         CARD_DRAG_START();
         return CARD_DRAG_END();
     }
@@ -89,7 +89,7 @@ const CARD_MOUSE_DOWN = (event) => {
             STATE.CARD_DRAG.TIMER = false;
         }, 150)
 
-        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS;
+        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS(event);
     }
 }
 
@@ -284,21 +284,14 @@ const PILE_STOCK_CLICK = () => {
 }
 
 const WINDOW_CURRENT_POINTER_POS = (e) => {
-    return (event.type == 'mousemove') ?
-    [event.clientX, event.clientY] :
-        [event.changedTouches[0].clientX, event.changedTouches[0].clientY];
+    return (e.type == 'mousemove' || e.type == 'mousedown' || e.type == 'mouseup') ?
+    [e.clientX, e.clientY] :
+        [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
 }
 
 const WINDOW_MOUSE_MOVE = (event) => {
-
     //Update STATE with Mouse Position
-    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS;
-
-    if(event.type != 'mousemove') {
-        console.log(event.type);
-        //console.log(event.changedTouches[0]);
-        //console.log(STATE.WINDOW.MOUSE_POS);
-    }
+    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS(event);
     
     //Action if drag status is true
     if(STATE.CARD_MOUSE.DOWN){
@@ -329,7 +322,7 @@ const WINDOW_MOUSE_UP = (event) => {
     clearTimeout(STATE.CARD_DRAG.TIMER);
     STATE.CARD_DRAG.TIMER = false;
     STATE.CARD_DRAG.TARGET = false;
-    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS;
+    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS(event);
 
     if(STATE.CARD_DRAG.STATUS == true){
         CARD_DRAG_END(event);
