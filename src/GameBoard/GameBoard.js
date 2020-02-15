@@ -5,10 +5,17 @@ import Foundation from '../Foundation/Foundation';
 import Tableau from '../Tableau/Tableau';
 import { STATE } from '../index';
 import QuickSolve from '../QuickSolve/QuickSolve';
+import Action from '../Action/Action';
 
 export default class GameBoard {
     constructor() {
         this.name = 'gameBoard';
+        this.clickEvents = [
+            {
+                trigger: "click",
+                action: Action.ToggleMenu
+            }
+        ];
         this.allTableau = this.allTableau.bind(this);
         this.detectWin = this.detectWin.bind(this);
         this.element = this.element.bind(this);
@@ -41,6 +48,9 @@ export default class GameBoard {
         me.id = this.name;
         me.style.zIndex = -1;
         document.body.appendChild(me);
+        this.clickEvents.forEach(item => {
+            me.addEventListener(item.trigger, item.action);
+        })
 
         //Add the different types of piles to the game board.
         STATE.GAME.OBJECT_TREE.push(new Stock(this, 'stock'));
