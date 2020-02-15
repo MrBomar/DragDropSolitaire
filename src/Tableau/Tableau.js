@@ -41,9 +41,12 @@ export default class Tableau extends Pile {
     }
 
     validateMove(aCard) {
+        console.log(aCard);
         let tempCard = [];
         if(aCard instanceof Card) {
             tempCard.push(aCard);
+        } else if(aCard.length < 1) {
+            return false;
         } else {
             tempCard = aCard;
         }
