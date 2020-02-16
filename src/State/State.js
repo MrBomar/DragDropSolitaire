@@ -1,4 +1,5 @@
-//STATE should be accessed and updated only through GLOBALS?
+import Pile from '../Pile/Pile';
+import Stock from '../Stock/Stock';
 
 export default class State {
     constructor() {
@@ -41,7 +42,15 @@ export default class State {
             MOUSE_POS: false
         }
         
+        this.getAllPiles = this.getAllPiles.bind(this);
         this.reset = this.reset.bind(this);
+        this.setDeckString = this.setDeckString.bind(this);
+        this.setToPileUsingMousePOS = this.setToPileUsingMousePOS.bind(this);
+        this.setWindowMousePOS = this.setWindowMousePOS.bind(this);
+    }
+
+    getAllPiles() {
+        return this.GAME.OBJECT_TREE.filter(i => i instanceof Pile);
     }
 
     reset() {
@@ -85,5 +94,24 @@ export default class State {
             MENU_OPEN: true,
             MOUSE_POS: false
         }
+    }
+
+    setDeckString() {
+        let t = "";
+        this.GAME.OBJECT_TREE.find(i => i instanceof Stock).cards.forEach(j => t += j.name);
+        this.GAME.DECK_STRING = t;
+    }
+
+    setToPileUsingMousePOS() {
+        this.CARD_ACTION.TO_PILE = this.getAllPiles().find(pile => this.WINDOW.MOUSE_POS[0] >= pile.getLeft() &&
+        this.WINDOW.MOUSE_POS[0] <= pile.getRight() &&
+        this.WINDOW.MOUSE_POS[1] >= pile.getTop() &&
+        this.WINDOW.MOUSE_POS[1] <= pile.getBottom());
+    }
+
+    setWindowMousePOS(e) {
+        this.WINDOW.MOUSE_POS = (e.type == 'mousemove' || e.type == 'mousedown' || e.type == 'mouseup') ?
+        [e.clientX, e.clientY] :
+            [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
     }
 }

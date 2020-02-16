@@ -6,9 +6,9 @@ import MoveCard from "../CardMoves/MoveCard";
 import GameBoard from "../GameBoard/GameBoard";
 import Foundation from "../Foundation/Foundation";
 import { STATE } from "../index";
+import Talon from "../Talon/Talon";
 import Tableau from "../Tableau/Tableau";
-
-const ALL_PILES = () => STATE.GAME.OBJECT_TREE.filter(obj => obj instanceof Pile);
+import Stock from '../Stock/Stock';
 
 //Isolate Card
 const FIND_CARD = (a) => {
@@ -21,7 +21,7 @@ const FIND_CARD = (a) => {
 }
 
 const GET_CARD_OBJECT = (a) => {
-    return ALL_PILES().find(pile => {
+    return STATE.getAllPiles().find(pile => {
         return pile.cards.find(crd => crd.name == a.id);
     }).cards.find(crd => crd.name == a.id);
 }
@@ -42,12 +42,6 @@ const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
 }
 
 const CARD_MOUSE_DOWN = (event) => {
-    //Added to prevent double firing of event.
-    event.stopPropagation();
-    event.preventDefault();
-    
-    console.log(event);
-
     //UPDATE STATE
     STATE.CARD_MOUSE.DOWN = true;
 
@@ -57,7 +51,7 @@ const CARD_MOUSE_DOWN = (event) => {
     //Shortcut if mouse down is on stock.
     if(FIND_PILE_USING_CARD_DOM_ELEMENT(FIND_CARD(event.target)).name === 'stock') {
         STATE.CARD_ACTION.TARGET = targetCard;
-        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS(event);
+        STATE.CARD_ACTION.MOUSE_ORIG_POS = STATE.WINDOW.MOUSE_POS;
         CARD_DRAG_START();
         return CARD_DRAG_END();
     }
@@ -92,7 +86,7 @@ const CARD_MOUSE_DOWN = (event) => {
             STATE.CARD_DRAG.TIMER = false;
         }, 150)
 
-        STATE.CARD_ACTION.MOUSE_ORIG_POS = WINDOW_CURRENT_POINTER_POS(event);
+        STATE.CARD_ACTION.MOUSE_ORIG_POS = STATE.WINDOW.MOUSE_POS;
     }
 }
 
@@ -108,14 +102,10 @@ const CARD_DRAG_START = () => {
 }
 
 const CARD_DRAG_END = () => {
-    //Identify drop pile my cursor POS on mouseup.
-    STATE.CARD_ACTION.TO_PILE = ALL_PILES().find(pile => STATE.WINDOW.MOUSE_POS[0] >= pile.getLeft() &&
-    STATE.WINDOW.MOUSE_POS[0] <= pile.getRight() &&
-    STATE.WINDOW.MOUSE_POS[1] >= pile.getTop() &&
-    STATE.WINDOW.MOUSE_POS[1] <= pile.getBottom());
+    STATE.setToPileUsingMousePOS();
 
     if(STATE.CARD_ACTION.FROM_PILE.name === "stock") {
-        STATE.CARD_ACTION.TO_PILE = ALL_PILES().find(pile => pile.name == 'talon');
+        STATE.CARD_ACTION.TO_PILE = STATE.getAllPiles().find(i => i instanceof Talon);
     };
 
     if(STATE.CARD_ACTION.TO_PILE) {
@@ -160,9 +150,15 @@ const CARD_DOUBLE_CLICK = () => {
     return true;
 }
 
+const DETECT_MOBILE_USER = () => {
+    ["Mobile","Phone","Pixel","Android","Opera Mini"].forEach(device=> {
+        STATE.GAME.MOBILE_USER = (navigator.userAgent.includes(device))? true: false;
+    })
+}
+
 const FIND_PILE_USING_CARD_DOM_ELEMENT = (cardElement) => {
     //Take cardElement and cycle through STATE.GAME.OBJECT_TREE to identify and return pile containing card.
-    return ALL_PILES().find(pile => pile.hasCard(cardElement.id));
+    return STATE.getAllPiles().find(pile => pile.hasCard(cardElement.id));
 }
 
 const GAME_CARDS_REMAIN = () => {
@@ -228,17 +224,12 @@ const GAME_DEAL_RANDOM = () => {
     GAME_NEW_GAME();
 
     //Generates a random deck and places it into the stock.
-    let target = STATE.GAME.OBJECT_TREE.find(item=> item.name === 'stock');
+    let target = STATE.GAME.OBJECT_TREE.find(i => i instanceof Stock);
     let myDeck = new Deck;
-    let myGame = STATE.GAME.OBJECT_TREE.find(item=> item.name == 'gameBoard');
+    let myGame = STATE.GAME.OBJECT_TREE.find(i => i instanceof GameBoard);
     myDeck.random(target, myGame);
 
-    //Create deck string
-    let deckString = '';
-    target.cards.forEach(item => {
-        deckString += item.name;
-    })
-    STATE.GAME.DECK_STRING = deckString;
+    STATE.setDeckString();
     GAME_DEAL();
 }
 
@@ -266,15 +257,9 @@ const GAME_NEW_GAME = () => {
     STATE.GAME.OBJECT_TREE.push(new GameBoard);
 }
 
-const DETECT_MOBILE_USER = () => {
-    ["Mobile","Phone","Pixel","Android","Opera Mini"].forEach(device=> {
-        STATE.GAME.MOBILE_USER = (navigator.userAgent.includes(device))? true: false;
-    })
-}
-
 const PILE_STOCK_CLICK = () => {
-    let stock = ALL_PILES().find(item => item.name == 'stock');
-    let talon = ALL_PILES().find(item => item.name == 'talon');
+    let stock = OBJECT_TREE.find(i => i instanceof Stock);
+    let talon = OBJECT_TREE.find(i => i instanceof Talon);
 
     talon.cards.reverse();
     talon.cards.forEach(card => {
@@ -286,15 +271,9 @@ const PILE_STOCK_CLICK = () => {
     REFRESH_SCREEN();
 }
 
-const WINDOW_CURRENT_POINTER_POS = (e) => {
-    return (e.type == 'mousemove' || e.type == 'mousedown' || e.type == 'mouseup') ?
-    [e.clientX, e.clientY] :
-        [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
-}
-
-const WINDOW_MOUSE_MOVE = (event) => {
+const WINDOW_MOUSE_MOVE = (e) => {
     //Update STATE with Mouse Position
-    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS(event);
+    STATE.setWindowMousePOS(e);
     
     //Action if drag status is true
     if(STATE.CARD_MOUSE.DOWN){
@@ -319,21 +298,20 @@ const WINDOW_MOUSE_MOVE = (event) => {
     }
 }
 
-const WINDOW_MOUSE_UP = (event) => {
+const WINDOW_MOUSE_UP = (e) => {
     //UPDATE STATE
     STATE.CARD_MOUSE.DOWN = false;
     clearTimeout(STATE.CARD_DRAG.TIMER);
     STATE.CARD_DRAG.TIMER = false;
     STATE.CARD_DRAG.TARGET = false;
-    STATE.WINDOW.MOUSE_POS = WINDOW_CURRENT_POINTER_POS(event);
+    STATE.setWindowMousePOS(e);
 
     if(STATE.CARD_DRAG.STATUS == true){
-        CARD_DRAG_END(event);
+        CARD_DRAG_END(e);
     }
 }
 
 export {
-    ALL_PILES,
     CARD_AUTO_MOVE,
     CARD_MOUSE_DOWN,
     DETECT_MOBILE_USER,

@@ -49,6 +49,6 @@ export default class CardAction {
     }
 
     getPile(name) {
-        return ALL_PILES().find(pile => name);
+        return STATE.getAllPiles().find(pile => name);
     }
 }
