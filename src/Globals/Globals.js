@@ -111,6 +111,7 @@ const CARD_DRAG_END = () => {
     //FIX ME
 
     STATE.clearDropState();
+    STATE.setWinDetected(STATE.getGameBoard().detectWin());
     REFRESH_SCREEN();
 }
 
@@ -129,7 +130,7 @@ const CARD_DOUBLE_CLICK = () => {
         CARD_DRAG_END();
     } else {
         //Run GAME_CHECK_CARD_AGAINST_PILES
-        let toPiles = STATE.getTableau().concat(STATE.getFoundations()).filter(i => STATE.CARD_ACTION.FROM_PILE != i);
+        let toPiles = STATE.getFoundations().concat(STATE.getTableau()).filter(i => STATE.CARD_ACTION.FROM_PILE != i);
         GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION.FROM_PILE,STATE.CARD_ACTION.CARDS[0],toPiles);
     }
 

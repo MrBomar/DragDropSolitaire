@@ -110,7 +110,7 @@ export default class State {
     }
 
     getFoundations() {
-        return this.GAME.OBJECT_TREE.find(i => i instanceof Foundation);
+        return this.GAME.OBJECT_TREE.filter(i => i instanceof Foundation);
     }
 
     getGameBoard() {

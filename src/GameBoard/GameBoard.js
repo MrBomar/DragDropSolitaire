@@ -36,7 +36,7 @@ export default class GameBoard {
 
     detectWin() {
         //Cycles the Tableau and checks to see if any piles are unsolved
-        return STATE.getTableau().find(pile => pile.solved() == false)? false: true;
+        return STATE.getTableau().filter(pile => pile.solved() == false)? false: true;
     }
 
     destruct() {

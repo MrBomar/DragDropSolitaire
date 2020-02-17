@@ -39,6 +39,7 @@ export default class QuickSolve{
     }
 
     refresh() {
+        console.log('QuickSolve.refresh()');
         this.showHide();
     }
 
@@ -135,9 +136,12 @@ export default class QuickSolve{
     }
 
     showHide() {
-        if(STATE.GAME_WIN_DETECTED) {
+        let poopie = STATE.getTableau().filter(i => !i.solved());
+        if(poopie.length == 0) {
             this.element().classList.remove("hide");
+            console.log('Should show');
         } else {
+            console.log('Should hide');
             this.element().classList.add("hide");
         }
     }

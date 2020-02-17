@@ -4,7 +4,6 @@ import CombinedMove from './CombinedMove';
 import Stock from '../Stock/Stock';
 import { STATE } from '../index';
 import Tableau from '../Tableau/Tableau';
-import GameBoard from '../GameBoard/GameBoard';
 import Card from '../Card/Card';
 
 export default class CardAction {
