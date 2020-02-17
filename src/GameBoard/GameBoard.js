@@ -1,4 +1,5 @@
 import './GameBoard.css';
+import Pile from '../Pile/Pile';
 import Stock from '../Stock/Stock';
 import Talon from '../Talon/Talon';
 import Foundation from '../Foundation/Foundation';
@@ -26,7 +27,11 @@ export default class GameBoard {
     }
 
     clickEvent(e) {
-        if(e.target.id == this.name)Action.ToggleMenu();
+        //Identify the pile the pointer is positioned over.
+        STATE.setToPileUsingMousePOS();
+        if(!(STATE.CARD_ACTION.TO_PILE instanceof Pile)){
+            if(e.target.id == this.name)Action.ToggleMenu();
+        }
     }
 
     detectWin() {

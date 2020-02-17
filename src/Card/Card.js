@@ -1,6 +1,6 @@
 import BaseClass from "../BaseClass/BaseClass";
 import {ToSymbol, ToFaceValue} from '../Conversion/Conversion';
-import {CARD_MOUSE_DOWN} from '../Globals/Globals';
+import {CARD_MOUSE_DOWN, KILL_THE_CLICK} from '../Globals/Globals';
 import './Card.css';
 
 export default class Card extends BaseClass {
