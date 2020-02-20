@@ -23,7 +23,13 @@ export default class Pile extends BaseClass {
 
     aboveCardValue(myCard) {
         let i = this.cards.indexOf(myCard);
-        return (i > 0) ? this.cards[i-1].value : false;
+        if( i > 0){
+            if(this.cards[i-1].face){
+                return this.cards[i-1].value;
+            }
+        }
+        return false;
+        //return (i > 0) ? this.cards[i-1].value : false;
     }
     
     addCards(cards) {

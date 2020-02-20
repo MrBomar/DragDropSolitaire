@@ -1,9 +1,10 @@
 import Action from "../Action/Action";
-import Deck from "../Deck/Deck";
 import CardAction from "../CardMoves/CardAction";
-import MoveCard from "../CardMoves/MoveCard";
-import GameBoard from "../GameBoard/GameBoard";
+import Deck from "../Deck/Deck";
 import Foundation from "../Foundation/Foundation";
+import GameBoard from "../GameBoard/GameBoard";
+import MoveCard from "../CardMoves/MoveCard";
+import Talon from "../Talon/Talon";
 import { STATE } from "../index";
 
 //Isolate Card
@@ -62,7 +63,7 @@ const CARD_MOUSE_DOWN = (event) => {
 
         //Starts double click timer - DO NOT ALTER
         STATE.setDblClickTarget(targetCard);
-        STATE.setDblClickTimer(setTimeout(STATE.clearDblClickTimer(),300));
+        STATE.setDblClickTimer(setTimeout(STATE.clearDblClickTimer,300));
 
         //Starts drag timer
         STATE.setDragTarget(targetCard);
@@ -131,6 +132,9 @@ const CARD_DOUBLE_CLICK = () => {
     } else {
         //Run GAME_CHECK_CARD_AGAINST_PILES
         let toPiles = STATE.getFoundations().concat(STATE.getTableau()).filter(i => STATE.CARD_ACTION.FROM_PILE != i);
+        console.log(toPiles);
+        console.log(STATE.CARD_ACTION.FROM_PILE);
+        console.log(STATE.CARD_ACTION.CARDS[0]);
         GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION.FROM_PILE,STATE.CARD_ACTION.CARDS[0],toPiles);
     }
 

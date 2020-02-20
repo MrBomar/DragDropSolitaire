@@ -4,6 +4,7 @@ import Pile from '../Pile/Pile';
 import Stock from '../Stock/Stock';
 import Tableau from '../Tableau/Tableau';
 import Talon from "../Talon/Talon";
+import {STATE} from "../index";
 
 export default class State {
     constructor() {
