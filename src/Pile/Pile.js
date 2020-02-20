@@ -1,35 +1,35 @@
+import BaseClass from "../BaseClass/BaseClass";
 import Card from "../Card/Card";
 import './Pile.css';
 
-export default class Pile {
+export default class Pile extends BaseClass {
     constructor(parent, name) {
+        super(name);
         this.parent = parent;
-        this.name = name;
         this.cssClasses = ['topPile'];
         this.cards = [];
         this.aboveCardValue = this.aboveCardValue.bind(this);
         this.addCards = this.addCards.bind(this);
         this.cardCount = this.cardCount.bind(this);
-        this.destruct = this.destruct.bind(this);
-        this.element = this.element.bind(this);
         this.faceCards = this.faceCards.bind(this);
-        this.getBottom = this.getBottom.bind(this);
-        this.getHeight = this.getHeight.bind(this);
-        this.getLeft = this.getLeft.bind(this);
-        this.getRight = this.getRight.bind(this);
-        this.getTop = this.getTop.bind(this);
-        this.getWidth = this.getWidth.bind(this);
         this.hasCard = this.hasCard.bind(this);
         this.nonFaceCards = this.nonFaceCards.bind(this);
         this.refresh = this.refresh.bind(this);
         this.removeCards = this.removeCards.bind(this);
         this.selectCards = this.selectCards.bind(this);
+        this.destruct = this.destruct.bind(this);
         this.topCard = this.topCard.bind(this);
     }
 
     aboveCardValue(myCard) {
         let i = this.cards.indexOf(myCard);
-        return (i > 0) ? this.cards[i-1].value : false;
+        if( i > 0){
+            if(this.cards[i-1].face){
+                return this.cards[i-1].value;
+            }
+        }
+        return false;
+        //return (i > 0) ? this.cards[i-1].value : false;
     }
     
     addCards(cards) {
@@ -42,23 +42,12 @@ export default class Pile {
 
     destruct() {
         this.cards.forEach(crd => crd.destruct());
-        this.element().remove();
-    }
-
-    element() {
-        return document.getElementById(this.name);
+        this.destructor();
     }
 
     faceCards() {
         return (this.cardCount() > 0) ? this.cards.filter(crd => crd.face == true) : false; 
     }
-
-    getBottom() {return this.getTop() + this.element().offsetHeight};
-    getHeight() {return this.element().offsetHeight};
-    getLeft() {return this.element().offsetLeft};
-    getRight() {return this.getLeft() + this.element().offsetWidth};
-    getTop() {return this.element().offsetTop};
-    getWidth() {return this.element().offsetWidth};
 
     hasCard(cardName) {return (this.cards.find(crd=>crd.name == cardName)) ? true : false; }
 

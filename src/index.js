@@ -20,5 +20,4 @@ REFRESH_SCREEN();
 
 //This function will console.log the current state for debugging purposes
 const outputState = () => {console.log(STATE)};
-
 window.outputState = outputState;

@@ -1,10 +1,12 @@
-import Foundation from "../Foundation/Foundation";
 import { STATE } from "../index";
 import "./QuickSolve.css";
-import Talon from "../Talon/Talon";
-import Tableau from "../Tableau/Tableau";
-import Stock from "../Stock/Stock";
-import {GAME_FACEDOWN_CARDS_REMAIN, PILE_STOCK_CLICK, CARD_MOUSE_DOWN, GAME_CARDS_REMAIN, GAME_CHECK_CARD_AGAINST_PILES} from "../Globals/Globals";
+import { 
+    GAME_FACEDOWN_CARDS_REMAIN,
+    PILE_STOCK_CLICK,
+    CARD_MOUSE_DOWN,
+    GAME_CARDS_REMAIN,
+    GAME_CHECK_CARD_AGAINST_PILES
+} from "../Globals/Globals";
 
 export default class QuickSolve{
     constructor(parent){
@@ -22,10 +24,6 @@ export default class QuickSolve{
         this.checkTableauTopCards = this.checkTableauTopCards.bind(this);
         this.destruct = this.destruct.bind(this);
         this.element = this.element.bind(this);
-        this.getFoundations = this.getFoundations.bind(this);
-        this.getStock = this.getStock.bind(this);
-        this.getTalon = this.getTalon.bind(this);
-        this.getTableau = this.getTableau.bind(this);
         this.refresh = this.refresh.bind(this);
         this.render = this.render.bind(this);
         this.showHide = this.showHide.bind(this);
@@ -38,22 +36,6 @@ export default class QuickSolve{
     destruct() {
         this.clickEvents.forEach(item=>{this.element().removeEventListener(item.trigger, item.action)});
         this.element().remove();
-    }
-
-    getFoundations() {
-        return STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Foundation);
-    }
-
-    getStock() {
-        return STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof Stock);
-    }
-
-    getTalon() {
-        return STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof Talon);
-    }
-
-    getTableau() {
-        return STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
     }
 
     refresh() {
@@ -76,7 +58,7 @@ export default class QuickSolve{
                 if(!this.checkTableauTopCards()) { //Check the Tableau topCard();
                     if(!this.checkTableauBottomCards()) { //Check the Tableau bottomCard;
                         if(!this.checkTalon()) { //Check the Talon topCard();
-                            let stockPile = this.getStock();
+                            let stockPile = STATE.getStock();
                             if(stockPile.cardCount() > 0){
                                 let targetCard = stockPile.topCard().element();
                                 let event = {target:targetCard}
@@ -94,8 +76,8 @@ export default class QuickSolve{
     }
 
     checkTableauBottomCards() {
-        let toPiles = STATE.GAME.OBJECT_TREE.filter(pile=>pile instanceof Tableau);
-        let tempFromPiles = STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
+        let toPiles = STATE.getTableau();
+        let tempFromPiles = toPiles.filter(i => i.cardCount() > 0);
         let fromPiles = tempFromPiles.filter(pile => {
             if(pile.faceCards()) {
                 if(pile.faceCards()[0].value == "M" && pile.nonFaceCards() == false){
@@ -108,8 +90,8 @@ export default class QuickSolve{
         let found = false;
         let i = 0;
         while (found == false && i < fromPiles.length) {
-            STATE.CARD_ACTION_FROM_PILE = fromPiles[i];
-            STATE.CARD_ACTION_CARDS = fromPiles[i].faceCards();
+            STATE.setActionFromPile(fromPiles[i]);
+            STATE.setActionCards(fromPiles[i].faceCards())
             if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_FROM_PILE, STATE.CARD_ACTION_CARDS[0], toPiles)){
                 found = true;
             };
@@ -120,8 +102,8 @@ export default class QuickSolve{
 
     checkTableauTopCards() {
         //Create toPiles and fromPiles array
-        let toPiles = (GAME_FACEDOWN_CARDS_REMAIN()) ? STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation) : STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Foundation);
-        let fromPiles = STATE.GAME.OBJECT_TREE.filter(pile => pile instanceof Tableau && pile.cardCount() > 0);
+        let toPiles = (GAME_FACEDOWN_CARDS_REMAIN()) ? STATE.getTableau().concat(STATE.getFoundations()) : STATE.getFoundations();
+        let fromPiles = STATE.getTableau().filter(i => i.cardCount() > 0);
         let tempFromPiles = fromPiles.filter(pile => {
             if(pile.topCard().value == "M" && !pile.nonFaceCards() && GAME_FACEDOWN_CARDS_REMAIN()) {
                 return false;
@@ -132,8 +114,8 @@ export default class QuickSolve{
         let found = false;
         let i = 0;
         while (found == false && i < tempFromPiles.length) {
-            STATE.CARD_ACTION_FROM_PILE = tempFromPiles[i];
-            STATE.CARD_ACTION_CARDS = [tempFromPiles[i].topCard()];
+            STATE.setActionFromPile(tempFromPiles[i]);
+            STATE.setActionCards([tempFromPiles[i].topCard()]);
             if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_FROM_PILE, STATE.CARD_ACTION_CARDS[0], toPiles)){
                 found = true;
             };
@@ -143,17 +125,18 @@ export default class QuickSolve{
     }
 
     checkTalon() {
-        STATE.CARD_ACTION_CARDS = STATE.GAME.OBJECT_TREE.find(pile => pile instanceof Talon);
+        STATE.setActionCards(STATE.getTalon());
         if(STATE.CARD_ACTION_CARDS.cardCount()) {
-            let toPiles = STATE.GAME.OBJECT_TREE.filter(pile=> pile instanceof Tableau || pile instanceof Foundation);
-            STATE.CARD_ACTION_CARDS = [STATE.CARD_ACTION_CARDS.topCard()];
+            let toPiles = STATE.getTableau().concat(STATE.getFoundations());
+            STATE.setActionCards([STATE.CARD_ACTION_CARDS.topCard()]);
             return (GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_CARDS, STATE.CARD_ACTION_CARDS, toPiles));
         }
         return false;
     }
 
     showHide() {
-        if(STATE.GAME_WIN_DETECTED) {
+        let poopie = STATE.getTableau().filter(i => !i.solved());
+        if(poopie.length == 0) {
             this.element().classList.remove("hide");
         } else {
             this.element().classList.add("hide");

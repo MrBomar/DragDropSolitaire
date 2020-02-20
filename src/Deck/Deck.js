@@ -1,5 +1,4 @@
 import {SuiteValues, CardValues} from '../Conversion/Conversion';
-import Stock from "../Stock/Stock";
 import GameBoard from "../GameBoard/GameBoard";
 import {STATE} from '../index';
 import Card from '../Card/Card';
@@ -69,13 +68,9 @@ export default class Deck {
             individualCards.push([deckString[i], deckString[i+1], deckString[i+2]]);
         }
 
-        //Capture targets to pass
-        let parent = STATE.GAME.OBJECT_TREE.find(item=> item instanceof Stock);
-        let board = STATE.GAME.OBJECT_TREE.find(item=> item instanceof GameBoard);
-
         //Build cards and push onto Stock
         individualCards.forEach(crd => {
-            parent.cards.push(new Card(crd[0], crd[1], crd[2], board, false))
+            STATE.getStock().cards.push(new Card(crd[0], crd[1], crd[2], STATE.getGameBoard(), false))
         })
     }
 }   

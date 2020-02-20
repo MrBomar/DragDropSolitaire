@@ -25,6 +25,6 @@ export default class Stock extends Pile {
     }
 
     validateMove(aCard){
-        console.log('Validate Move');
+        //FIX ME??
     }
 }

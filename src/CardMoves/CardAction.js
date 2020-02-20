@@ -1,11 +1,9 @@
-import {ALL_PILES} from '../Globals/Globals';
 import MoveCard from './MoveCard';
 import FlipCard from './FlipCard';
 import CombinedMove from './CombinedMove';
 import Stock from '../Stock/Stock';
 import { STATE } from '../index';
 import Tableau from '../Tableau/Tableau';
-import GameBoard from '../GameBoard/GameBoard';
 import Card from '../Card/Card';
 
 export default class CardAction {
@@ -41,14 +39,13 @@ export default class CardAction {
     }
 
     execute() {
-        STATE.GAME.MOVE_HISTORY.push(new CombinedMove(this.actions));
-        //STATE.GAME_WIN_DETECTED = true;  //Condition used for testing
-        if(STATE.GAME.OBJECT_TREE.find(pile=>pile instanceof GameBoard).detectWin()) STATE.GAME.WIN_DETECTED = true;
+        STATE.addMoveToHistory(new CombinedMove(this.actions));
+        if(STATE.getGameBoard().detectWin()) STATE.setWinDetected(true);
         //FIX ME
         //From here we can call the function to send solved deck string to server
     }
 
     getPile(name) {
-        return ALL_PILES().find(pile => name);
+        return STATE.getAllPiles().find(pile => pile.name == name);
     }
 }
