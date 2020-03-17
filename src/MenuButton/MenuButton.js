@@ -1,7 +1,9 @@
 import '../MenuButton/MenuButton.css';
+import BaseClass from '../BaseClass/BaseClass';
 
-export default class MenuButton {
-    constructor(text, action){
+export default class MenuButton extends BaseClass{
+    constructor(text, action) {
+        super('testingButton');
         this.text = text;
         this.action = action;
         this.object;

@@ -1,3 +1,5 @@
+/* This view should have the menu bar on top (Portrait) */
+
 #tableau1 {
     grid-column: 2;
 }
@@ -27,18 +29,18 @@
 }
 
 .tableau {
-    width: 13.14285714vw;
-    height: calc(100vh - (23.44414437vw));
+    width: calc(calc(92vw - 50px) / 7);
+    height: calc(calc(100vh - 50px) - 23.44414437vw);
     background-color: rgba(255, 255, 255, .25);
     grid-row: 4;
 }
 
 @media screen and (min-aspect-ratio: 741 / 741){
+    
+    /* This view should have the menu bar on the left (Landscape) */
 
     .tableau {
         width: 13.14285714vh;
-        height: calc(100vh - (23.44414437vh));
-        background-color: rgba(255, 255, 255, .25);
-        grid-row: 4;
+        height: calc(100vh - 23.44414437vh);
     }
 }

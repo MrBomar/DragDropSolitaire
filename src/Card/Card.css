@@ -9,6 +9,8 @@
 .card {
     box-sizing: border-box;
     user-select: none;
+    height: calc(calc(calc(92vw - 50px) / 7) / .64285714285714285714285714285714);
+    width: calc(calc(92vw - 50px) / 7);
 }
 
 .cardFront {
@@ -80,12 +82,6 @@
 .cardTop, .cardBottom {
     width: 100%;
     height: calc(20.4397vw * .25);
-}
-
-.cardBack, .cardFront, .mobileCardFront {
-    height: 20.44414437vw;
-    width: 13.14285714vw;
-    user-select: none;
 }
 
 .shade {

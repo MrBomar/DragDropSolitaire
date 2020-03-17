@@ -2,11 +2,21 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     user-select: none;
-    text-align: center;
-    line-height: 100px;
+    text-align: left;
+    height: 50px;
+    width: 200px;
+    z-index: 100;
 }
 
 .MenuButton:hover {
     background-color: rgba(255,255,255,.70);
     color: black;
+}
+
+@media screen and (min-aspect-ratio: 741/741) {
+    .MenuButton {
+        height: 50px;
+        width: 200px;
+        padding-left: 10px;
+    }
 }

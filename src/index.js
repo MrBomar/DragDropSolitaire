@@ -2,9 +2,11 @@ import GameMenu from './GameMenu/GameMenu';
 import './index.css';
 import {REFRESH_SCREEN, WINDOW_MOUSE_MOVE, WINDOW_MOUSE_UP, DETECT_MOBILE_USER} from './Globals/Globals';
 import State from './State/State';
+import { GameMenuFull } from './GameMenu/GameMenuFull';
 
 let STATE = new State;
-let GAME_MENU = new GameMenu(document.body);
+//let GAME_MENU = new GameMenu(document.body);
+let GAME_MENU = new GameMenuFull(document.body);
 export { STATE, GAME_MENU };
 
 DETECT_MOBILE_USER();

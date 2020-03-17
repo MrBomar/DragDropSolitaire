@@ -3,13 +3,15 @@ import Action from "../Action/Action";
 import './GameMenu.css';
 import MenuButton from '../MenuButton/MenuButton';
 import CloseButton from '../CloseButton/CloseButton';
+import BaseClass from '../BaseClass/BaseClass';
 
-export default class GameMenu {
-    constructor(parentDocument){
-        this.parentDocument = parentDocument;
+export default class GameMenu extends BaseClass {
+    constructor(parent, name) {
+        super(name);
+        this.parent = parent;
         this.menuItems = [];
-        this.object;
-        this.object2;
+        this.menu;
+        this.screen;
         this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
         this.render();
@@ -17,15 +19,16 @@ export default class GameMenu {
 
     render(){
         //Creating the menu object
-        this.object = document.createElement("div");
-        this.object.id = 'gameMenu';
-        this.object.classList.add('menuopen');
+        this.menu = document.createElement("div");
+        this.menu.id = 'gameMenu';
+        this.addClass('menuopen');
+        this.menu.classList.add('menuopen');
 
         //Creating the screen
-        this.object2 = document.createElement("div");
-        this.object2.id = 'gameMenuScreen';
-        this.object2.classList.add('screenopen');
-        this.object2.onclick = Action.ToggleMenu;
+        this.screen = document.createElement("div");
+        this.screen.id = 'gameMenuScreen';
+        this.screen.classList.add('screenopen');
+        this.screen.onclick = Action.ToggleMenu;
 
         //These are the buttons
         this.menuItems.push(new CloseButton(Action.ToggleMenu));
@@ -38,8 +41,8 @@ export default class GameMenu {
         })
 
         //Write the menu to the document body
-        this.parentDocument.appendChild(this.object);
-        this.parentDocument.appendChild(this.object2);
+        this.parentDocument.appendChild(this.menu);
+        this.parentDocument.appendChild(this.screen);
     }
 
     refresh(){

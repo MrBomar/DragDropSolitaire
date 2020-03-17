@@ -53,7 +53,8 @@ export default class QuickSolve{
 
     solve () {
         this.solveTimer = setInterval(() => {
-            if(GAME_CARDS_REMAIN()) {        
+            if(GAME_CARDS_REMAIN()) {
+                console.log("solve");
                 //Master Action
                 if(!this.checkTableauTopCards()) { //Check the Tableau topCard();
                     if(!this.checkTableauBottomCards()) { //Check the Tableau bottomCard;
@@ -116,7 +117,7 @@ export default class QuickSolve{
         while (found == false && i < tempFromPiles.length) {
             STATE.setActionFromPile(tempFromPiles[i]);
             STATE.setActionCards([tempFromPiles[i].topCard()]);
-            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION_FROM_PILE, STATE.CARD_ACTION_CARDS[0], toPiles)){
+            if(GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION.FROM_PILE, STATE.CARD_ACTION.FROM_PILE.cards[0], toPiles)){
                 found = true;
             };
             i++;

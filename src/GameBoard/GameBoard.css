@@ -1,16 +1,23 @@
+/* This view should have the menu bar on top (Portrait) */
+
 #gameBoard {
+    z-index: -1;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 50px);
     background-color: green;
     display: grid;
-
-    grid-template-columns: 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw 13.14285714vw 1vw; 
-    grid-template-rows: 1vw 20.44414437vw 1vw calc(100vh - 23.44414437vw) 1vw; 
+    grid-template-columns: 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw calc(92vw / 7) 1vw;
+    grid-template-rows: 1vw 20.44414437vw 1vw calc(calc(100vh - 50px) - 23.44414437vw) 1vw; 
 }
 
 @media screen and (min-aspect-ratio: 741/741) {
+    
+    /* This view should have the menu bar on the left (Landscape) */
+    
     #gameBoard {
-        grid-template-columns: calc((100vw - 99vh)/2) 13.14285714vh 1vh 13.14285714vh 1vh 13.14285714vh 1vh 13.14285714vh 1vw 13.14285714vh 1vw 13.14285714vh 1vh 13.14285714vh calc((100vw - 99vh)/2);
+        height: 100vh;
+        width: calc(100vw - 50px);
+        grid-template-columns: calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8);
         grid-template-rows: 1vh 20.44414437vh 1vh calc(100vw - 23.44414437vh) 1vh;
     }
 }

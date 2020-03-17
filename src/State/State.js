@@ -49,7 +49,10 @@ export default class State {
         
         this.addMoveToHistory = this.addMoveToHistory.bind(this);
         this.addToObjectTree = this.addToObjectTree.bind(this);
+        this.clearCardAction = this.clearCardAction.bind(this);
+        this.clearCardDblClick = this.clearCardDblClick.bind(this);
         this.clearDblClickTimer = this.clearDblClickTimer.bind(this);
+        this.clearDragCard = this.clearDragCard.bind(this);
         this.clearDragTimer = this.clearDragTimer.bind(this);
         this.clearDropState = this.clearDropState.bind(this);
         this.getAllPiles = this.getAllPiles.bind(this);
@@ -87,10 +90,36 @@ export default class State {
     addToObjectTree(a) {
         this.GAME.OBJECT_TREE.push(a);
     }
+
+    clearCardAction() {
+        this.CARD_ACTION = {
+            CARDS: [],
+            FROM_PILE: false,
+            MOUSE_ORIG_POS: false,
+            TARGET: false,
+            TO_PILE: false
+        };
+    }
+
+    clearCardDblClick() {
+        this.CARD_DBL_CLICK = {
+            STATUS: false,
+            TARGET: false,
+            TIMER: false
+        }
+    }
     
     clearDblClickTimer() {
         clearTimeout(this.CARD_DBL_CLICK.TIMER);
         this.CARD_DBL_CLICK.TIMER = false;
+    }
+
+    clearDragCard() {
+        this.CARD_DRAG = {
+            STATUS: false,
+            TARGET: false,
+            TIMER: false
+        }
     }
 
     clearDragTimer() {
@@ -99,11 +128,10 @@ export default class State {
     }
 
     clearDropState() {
-        this.CARD_ACTION.CARDS = [];
-        this.CARD_ACTION.MOUSE_ORIG_POS = false;
-        this.CARD_ACTION.FROM_PILE = false;
-        this.CARD_DRAG.STATUS = false;
-        this.CARD_ACTION.TO_PILE = false;
+        this.clearCardAction();
+        this.clearCardDblClick();
+        this.clearDragCard();
+        console.log(STATE);
     }
 
     getAllPiles() {
@@ -186,7 +214,11 @@ export default class State {
     }
 
     setActionToPile(a) {
-        this.CARD_ACTION.TO_PILE = a;
+        if(a === false) {
+            this.CARD_ACTION.TO_PILE = false;
+        } else {
+            this.CARD_ACTION.TO_PILE = a;
+        }
     }
 
     setActionTarget(a) {

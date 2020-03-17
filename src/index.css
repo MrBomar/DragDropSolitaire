@@ -1,11 +1,26 @@
+/* This view should have the menu bar on top (Portrait) */
+
 * {
-    /*position: fixed;*/
     margin: 0px;
     padding: 0px;
     text-size-adjust: none;
     user-select: none;
 }
 
+body {
+    display: block;
+    overflow: hidden;
+}
+
 .hide {
     display: none;
+}
+
+@media screen and (min-aspect-ratio: 741/741) {
+
+    /* This view should have the menu bar on the left (Landscape) */
+
+    body {
+        display: inline-flex;
+    }
 }

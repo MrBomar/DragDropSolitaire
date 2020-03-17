@@ -29,7 +29,6 @@ export default class Pile extends BaseClass {
             }
         }
         return false;
-        //return (i > 0) ? this.cards[i-1].value : false;
     }
     
     addCards(cards) {

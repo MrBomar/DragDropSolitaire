@@ -58,7 +58,6 @@ const CARD_MOUSE_DOWN = (event) => {
         STATE.setActionTarget(STATE.CARD_DBL_CLICK.TARGET);
         STATE.setDblClickTarget(false);
         CARD_DOUBLE_CLICK();
-        STATE.setDblClickStatus(false);
     } else {
 
         //Starts double click timer - DO NOT ALTER
@@ -78,7 +77,7 @@ const CARD_MOUSE_DOWN = (event) => {
             }
             STATE.clearDragTimer();
         }, 150));
-
+        
         STATE.setActionMouseOrigPOS();
     }
 }
@@ -130,9 +129,12 @@ const CARD_DOUBLE_CLICK = () => {
     if(STATE.CARD_ACTION.FROM_PILE == STATE.getStock()) {
         CARD_DRAG_END();
     } else {
+        console.log("OK");
         //Run GAME_CHECK_CARD_AGAINST_PILES
         let toPiles = STATE.getFoundations().concat(STATE.getTableau()).filter(i => STATE.CARD_ACTION.FROM_PILE != i);
         GAME_CHECK_CARD_AGAINST_PILES(STATE.CARD_ACTION.FROM_PILE,STATE.CARD_ACTION.CARDS[0],toPiles);
+
+        STATE.clearDropState();
     }
 
     //Exit function
