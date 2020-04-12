@@ -38,7 +38,7 @@ export default class State {
             DECK_STRING: false,
             MOBILE_USER: false,
             MOVE_HISTORY: [],
-            OBJECT_TREE: [],
+            BOARD: false,
             WIN_DETECTED: false
         }
         
@@ -48,7 +48,6 @@ export default class State {
         }
         
         this.addMoveToHistory = this.addMoveToHistory.bind(this);
-        this.addToObjectTree = this.addToObjectTree.bind(this);
         this.clearCardAction = this.clearCardAction.bind(this);
         this.clearCardDblClick = this.clearCardDblClick.bind(this);
         this.clearDblClickTimer = this.clearDblClickTimer.bind(this);
@@ -85,10 +84,6 @@ export default class State {
 
     addMoveToHistory(a) {
         this.GAME.MOVE_HISTORY.push(a);
-    }
-
-    addToObjectTree(a) {
-        this.GAME.OBJECT_TREE.push(a);
     }
 
     clearCardAction() {
@@ -135,27 +130,27 @@ export default class State {
     }
 
     getAllPiles() {
-        return this.GAME.OBJECT_TREE.filter(i => i instanceof Pile);
+        return this.GAME.BOARD.children.filter(i => i instanceof Pile);
     }
 
     getFoundations() {
-        return this.GAME.OBJECT_TREE.filter(i => i instanceof Foundation);
+        return this.GAME.BOARD.children.filter(i => i instanceof Foundation);
     }
 
     getGameBoard() {
-        return this.GAME.OBJECT_TREE.find(i => i instanceof GameBoard);
+        return this.GAME.BOARD;
     }
 
     getStock() {
-        return this.GAME.OBJECT_TREE.find(i => i instanceof Stock);
+        return this.GAME.BOARD.children.find(i => i instanceof Stock); 
     }
 
     getTalon() {
-        return this.GAME.OBJECT_TREE.find(i => i instanceof Talon);
+        return this.GAME.BOARD.childen.find(i => i instanceof Talon);
     }
 
     getTableau() {
-        return this.GAME.OBJECT_TREE.filter(i => i instanceof Tableau);
+        return this.GAME.BOARD.children.filter(i => i instanceof Tableau);
     }
 
     popMoveHistory() {
@@ -163,9 +158,7 @@ export default class State {
     }
 
     reset() {
-        this.GAME.OBJECT_TREE.forEach(item=>{
-            item.destruct();
-        })
+        if(this.GAME.BOARD != false) this.GAME.BOARD.destruct();
         this.CARD_ACTION = {
             CARDS: [],
             FROM_PILE: false,
@@ -195,7 +188,7 @@ export default class State {
             DECK_STRING: false,
             MOBILE_USER: false,
             MOVE_HISTORY: [],
-            OBJECT_TREE: [],
+            BOARD: false,
             WIN_DETECTED: false
         }
         
@@ -249,7 +242,7 @@ export default class State {
 
     setDeckString() {
         let t = "";
-        this.GAME.OBJECT_TREE.find(i => i instanceof Stock).cards.forEach(j => t += j.name);
+        this.GAME.BOARD.children.find(i => i instanceof Stock).cards.forEach(j => t += j.name);
         this.GAME.DECK_STRING = t;
     }
 

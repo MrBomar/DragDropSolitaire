@@ -1,7 +1,8 @@
 /* This view should have the menu bar on top (Portrait) */
 
 #gameBoard {
-    z-index: -1;
+    grid-column: 1;
+    grid-row: 2;
     width: 100vw;
     height: calc(100vh - 50px);
     background-color: green;
@@ -15,8 +16,10 @@
     /* This view should have the menu bar on the left (Landscape) */
     
     #gameBoard {
-        height: 100vh;
         width: calc(100vw - 50px);
+        height: 100vh;
+        grid-column: 2;
+        grid-row: 1;
         grid-template-columns: calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8) 13vh calc((100vw - 91vh - 50px) / 8);
         grid-template-rows: 1vh 20.44414437vh 1vh calc(100vw - 23.44414437vh) 1vh;
     }

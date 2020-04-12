@@ -88,7 +88,8 @@ export default class Card extends BaseClass {
         }
         this.cssClasses.forEach(item => me.classList.add(item));
         me.id = this.name;
-        this.parent.element().appendChild(me);
+        this.parent.element.appendChild(me);
+        this.element = document.getElementById(this.name);
         this.addEventListeners();
     }
 }

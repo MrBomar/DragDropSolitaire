@@ -8,7 +8,6 @@
 
 .card {
     box-sizing: border-box;
-    user-select: none;
     height: calc(calc(calc(92vw - 50px) / 7) / .64285714285714285714285714285714);
     width: calc(calc(92vw - 50px) / 7);
 }
@@ -120,6 +119,5 @@
     .cardBack, .cardFront, .mobileCardFront {
         height: 20.44414437vh;
         width: 13.14285714vh;
-        user-select: none;
     }
 }

@@ -2,23 +2,31 @@ import '../MenuButton/MenuButton.css';
 import BaseClass from '../BaseClass/BaseClass';
 
 export default class MenuButton extends BaseClass{
-    constructor(text, action) {
-        super('testingButton');
-        this.text = text;
-        this.action = action;
-        this.object;
-        this.build = this.build.bind(this);
+    constructor(parent, name, symbol, events) {
+        super(name, events);
+        this.parent = parent;
+        this.symbol = symbol;
+        this.render = this.render.bind(this);
+        this.render();
     }
 
-    build(){
-        this.object = document.createElement('h1');
-        this.object.classList.add('MenuButton');
-        this.object.innerText = this.text;
-        this.object.onclick = this.action;
-        return this.object;
-    }
+    render() {
+        let me = document.createElement('div');
+        me.id = this.name;
+        me.classList.add('MenuButton');
 
-    object(){
-        this.object;
+        let mySymbol = document.createElement("h1");
+        mySymbol.classList.add('MenuButtonSymbol');
+        mySymbol.innerText = this.symbol;
+
+        let myText = document.createElement("h1");
+        myText.classList.add('MenuButtonText');
+        myText.innerText = this.name;
+
+        me.appendChild(mySymbol);
+        me.appendChild(myText);
+        this.parent.appendChild(me);
+        this.element = document.getElementById(this.name);
+        this.addEventListeners();
     }
 }

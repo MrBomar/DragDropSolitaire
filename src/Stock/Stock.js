@@ -20,8 +20,9 @@ export default class Stock extends Pile {
         me.id = this.name;
         me.style.zIndex = 0;
         this.cssClasses.forEach(item => me.classList.add(item));
-        this.parent.element().appendChild(me);
+        this.parent.element.appendChild(me);
         this.clickEvents.forEach(item => me.addEventListener(item.trigger, item.action));
+        this.element = document.getElementById(this.name);
     }
 
     validateMove(aCard){

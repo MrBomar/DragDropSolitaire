@@ -46,8 +46,9 @@ export default class QuickSolve{
         let me = document.createElement('button');
         me.id = this.name;
         me.innerText = "Quick Solve";
-        this.parent.element().appendChild(me);
+        this.parent.element.appendChild(me);
         this.clickEvents.forEach(item=>{this.element().addEventListener(item.trigger, item.action)});
+        this.element = document.getElementById(this.name);
         this.showHide();
     }
 
@@ -136,11 +137,15 @@ export default class QuickSolve{
     }
 
     showHide() {
-        let poopie = STATE.getTableau().filter(i => !i.solved());
-        if(poopie.length == 0) {
-            this.element().classList.remove("hide");
+        if(STATE.GAME.BOARD !=false) {
+            let unsolvedTableau = STATE.getTableau().filter(i => !i.solved());
+            if(unsolvedTableau.length == 0) {
+                this.element.classList.remove("hide");
+            } else {
+                this.element.classList.add("hide");
+            }
         } else {
-            this.element().classList.add("hide");
+            this.element.classList.add("hide");
         }
     }
 }

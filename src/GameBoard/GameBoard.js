@@ -1,4 +1,5 @@
 import './GameBoard.css';
+import BaseClass from '../BaseClass/BaseClass';
 import Pile from '../Pile/Pile';
 import Stock from '../Stock/Stock';
 import Talon from '../Talon/Talon';
@@ -7,43 +8,39 @@ import Tableau from '../Tableau/Tableau';
 import { STATE } from '../index';
 import QuickSolve from '../QuickSolve/QuickSolve';
 import Action from '../Action/Action';
+import { WINDOW_MOUSE_MOVE, WINDOW_MOUSE_UP } from '../Globals/Globals';
 
-export default class GameBoard {
+export default class GameBoard extends BaseClass{
     constructor() {
-        this.name = 'gameBoard';
-        this.clickEvent = this.clickEvent.bind(this);
-        this.eventListeners = [
+        super(name, [
             {
-                trigger: "click",
-                action: this.clickEvent
+                trigger: "touchmove",
+                action: WINDOW_MOUSE_MOVE
+            },
+            {
+                trigger: "mousemove",
+                action: WINDOW_MOUSE_MOVE
+            },
+            {
+                trigger: "mouseup",
+                action: WINDOW_MOUSE_UP
+            },
+            {
+                trigger: "touchend",
+                action: WINDOW_MOUSE_UP
             }
-        ];
+        ]);
+        this.name = 'gameBoard';
         this.detectWin = this.detectWin.bind(this);
-        this.destruct = this.destruct.bind(this);
         this.element = this.element.bind(this);
         this.render = this.render.bind(this);
         this.refresh = this.refresh.bind(this);
         this.render();
     }
 
-    clickEvent(e) {
-        //Identify the pile the pointer is positioned over.
-        STATE.setToPileUsingMousePOS();
-        if(!(STATE.CARD_ACTION.TO_PILE instanceof Pile)){
-            if(e.target.id == this.name)Action.ToggleMenu();
-        }
-    }
-
     detectWin() {
         //Cycles the Tableau and checks to see if any piles are unsolved
         return STATE.getTableau().filter(pile => pile.solved() == false)? false: true;
-    }
-
-    destruct() {
-        this.eventListeners.forEach(item => {
-            this.element().removeEventListener(item.trigger, item.action);
-        })
-        this.element().remove();
     }
 
     element() {
@@ -57,26 +54,27 @@ export default class GameBoard {
         me.id = this.name;
         me.style.zIndex = -1;
         document.body.appendChild(me);
-        this.eventListeners.forEach(item => {
-            me.addEventListener(item.trigger, item.action);
-        })
+        this.element = document.getElementById(this.name);
 
         //Add the different types of piles to the game board.
-        STATE.addToObjectTree(new Stock(this, 'stock'));
-        STATE.addToObjectTree(new Talon(this, 'talon'));
-        STATE.addToObjectTree(new Foundation(this, 'spade', 'S'))
-        STATE.addToObjectTree(new Foundation(this, 'heart', 'H'));
-        STATE.addToObjectTree(new Foundation(this, 'club', 'C'));
-        STATE.addToObjectTree(new Foundation(this, 'diamond', 'D'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau1'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau2'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau3'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau4'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau5'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau6'));
-        STATE.addToObjectTree(new Tableau(this, 'tableau7'));
-        STATE.addToObjectTree(new QuickSolve(this));
+        this.children.push(new Stock(this, 'stock'));
+        this.children.push(new Talon(this, 'talon'));
+        this.children.push(new Foundation(this, 'spade', 'S'))
+        this.children.push(new Foundation(this, 'heart', 'H'));
+        this.children.push(new Foundation(this, 'club', 'C'));
+        this.children.push(new Foundation(this, 'diamond', 'D'));
+        this.children.push(new Tableau(this, 'tableau1'));
+        this.children.push(new Tableau(this, 'tableau2'));
+        this.children.push(new Tableau(this, 'tableau3'));
+        this.children.push(new Tableau(this, 'tableau4'));
+        this.children.push(new Tableau(this, 'tableau5'));
+        this.children.push(new Tableau(this, 'tableau6'));
+        this.children.push(new Tableau(this, 'tableau7'));
+        this.children.push(new QuickSolve(this));
+        this.addEventListeners();
     }
 
-    refresh(){}
+    refresh(){
+        this.children.forEach(i => i.refresh());
+    }
 }

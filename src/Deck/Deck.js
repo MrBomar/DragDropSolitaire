@@ -1,5 +1,4 @@
 import {SuiteValues, CardValues} from '../Conversion/Conversion';
-import GameBoard from "../GameBoard/GameBoard";
 import {STATE} from '../index';
 import Card from '../Card/Card';
 

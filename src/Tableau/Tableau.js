@@ -23,7 +23,7 @@ export default class Tableau extends Pile {
         if(this.cards.length){
             let marginTotal = 0;
             this.cards.forEach(card => {
-                card.setTop(this.element().offsetTop + marginTotal);
+                card.setTop(this.element.offsetTop + marginTotal);
                 let baseMargin = card.getHeight() / 4;
                 marginTotal = (card.face)? marginTotal + baseMargin : marginTotal + baseMargin / 2;
                 card.setLeft(this.getLeft());
@@ -37,7 +37,8 @@ export default class Tableau extends Pile {
         me.id = this.name;
         me.style.zIndex = 0;
         this.cssClasses.forEach(item => me.classList.add(item));
-        this.parent.element().appendChild(me);
+        this.parent.element.appendChild(me);
+        this.element = document.getElementById(this.name);
     }
 
     validateMove(aCard) {

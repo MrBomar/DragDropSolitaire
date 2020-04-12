@@ -4,12 +4,13 @@
     margin: 0px;
     padding: 0px;
     text-size-adjust: none;
-    user-select: none;
+    /* user-select: none; */
 }
 
 body {
-    display: block;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 50px calc(100vh - 50px);
 }
 
 .hide {
@@ -20,7 +21,8 @@ body {
 
     /* This view should have the menu bar on the left (Landscape) */
 
-    body {
-        display: inline-flex;
+    body {    
+        grid-template-columns: 50px calc(100vw - 50px);
+        grid-template-rows: 100vh;
     }
 }

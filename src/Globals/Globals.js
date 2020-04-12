@@ -25,7 +25,7 @@ const GET_CARD_OBJECT = (a) => {
 
 const REFRESH_SCREEN = () => {
     //This routine will cycle through state objects and refresh their related objects.
-    STATE.GAME.OBJECT_TREE.forEach(obj=>obj.refresh());
+    STATE.GAME.BOARD.refresh();
 }
 
 const CARD_AUTO_MOVE = (fromPile, targetCard, toPile, deal) => {
@@ -202,7 +202,7 @@ const GAME_DEAL = () => {
     //Iterate through the deal order and perform the card moves.
     dealOrder.forEach(item => {
         let cardArray = [fromPile.topCard()];
-        let toPile = STATE.GAME.OBJECT_TREE.find(pile => pile.name == item[0]);
+        let toPile = STATE.GAME.BOARD.children.find(pile => pile.name == item[0]);
         if(item[1]) cardArray[0].flip();
         CARD_AUTO_MOVE(fromPile, cardArray, toPile, false);
     });
@@ -241,7 +241,7 @@ const GAME_NEW_GAME = () => {
     STATE.reset();
 
     //Build new GameBoard
-    STATE.addToObjectTree(new GameBoard);
+    STATE.GAME.BOARD = new GameBoard;
 }
 
 const PILE_STOCK_CLICK = () => {

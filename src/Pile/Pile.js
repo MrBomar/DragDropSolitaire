@@ -67,8 +67,8 @@ export default class Pile extends BaseClass {
 
     refresh() {
         this.cards.forEach(card => {
-            card.setTop(this.element().offsetTop);
-            card.setLeft(this.element().offsetLeft);
+            card.setTop(this.element.offsetTop);
+            card.setLeft(this.element.offsetLeft);
             card.setZIndex(this.cards.indexOf(card));
         })
     }

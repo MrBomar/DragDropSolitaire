@@ -22,7 +22,8 @@ export default class Foundation extends Pile {
         me.innerText = ToSymbol(this.suite);
         this.cssClasses.forEach(item => me.classList.add(item));
         me.classList.add("symbol");
-        this.parent.element().appendChild(me);
+        this.parent.element.appendChild(me);
+        this.element = document.getElementById(this.name);
     }
 
     validateMove(aCard) {
